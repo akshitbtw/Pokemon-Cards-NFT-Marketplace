@@ -2,8 +2,9 @@ import { contractPromise } from './connectToContract.js';
 document.addEventListener('DOMContentLoaded', async () => {
     const nftContainer = document.getElementById("nft-container");
     const nftCardTemplate = document.getElementById("nft-card-template");
+    let contract;
     try {
-        const contract = await contractPromise;
+        contract = await contractPromise;
         let account;
         const accounts = await ethereum.request({ method: 'eth_requestAccounts' }).then(accounts => {
             account = accounts[0];
@@ -22,6 +23,19 @@ document.addEventListener('DOMContentLoaded', async () => {
         console.error('Error connecting to contract:', error);
     }
 
+    ethereum.on("accountsChanged", function (accounts) {
+        // Update button text when account changes
+        let account = accounts[0];
+        contract.methods.getOwnedTokensMetadata(account).call()
+            .then(result => {
+                // console.log(result);
+                if(result.length===0) nftContainer.innerHTML = "";
+                else    getMetaData(result);
+            })
+            .catch(error => {
+                console.error('Error calling view function:', error);
+            });
+    });
     function getMetaData(response) {
         response.forEach(item => {
             const tokenId = item[0];
