@@ -9,9 +9,10 @@ document.addEventListener('DOMContentLoaded', async () => {
             account = accounts[0];
             console.log(account);
         });
-        // const result = await contract.methods.createToken('ipfs://bafkreiarx6uxe4azm7g3ydwjnhjntxzhpxmfojsqusiv2c4u3zv4v6up3m').send({ from: account });
+        // const result = await contract.methods.createToken('ipfs://bafkreicg5bzc3fncuapi5vfrgzz3er26k4aot6iaj6r46x6rcsqqvozjfm').send({ from: account });
         contract.methods.getOwnedTokensMetadata(account).call()
             .then(result => {
+                // console.log(result);
                 getMetaData(result);
             })
             .catch(error => {
@@ -22,64 +23,59 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     function getMetaData(response) {
-        // console.log(response);
-        // Store the metadata URIs in the tokenURIs array
-        const tokenURIs = [];
-        response.forEach((metadataURI) => {
-            tokenURIs.push(metadataURI);
-        });
+        response.forEach(item => {
+            const tokenId = item[0];
+            fetchMetadata(item[1]).then(nft => {
+                if (nft) {
+                    // console.log(metadata);
+                    // console.log(metadata.description);
+                    const card = nftCardTemplate.content.cloneNode(true);
 
-        tokenURIs.forEach((uri) => {
-            fetchMetadata(uri)
-                .then(nft => {
-                    if (nft) {
-                        // console.log(metadata);
-                        // console.log(metadata.description);
-                        const card = nftCardTemplate.content.cloneNode(true);
+                    // Update the cloned elements with NFT details
+                    const image = card.querySelector(".nft-image");
+                    image.src = nft.image;
+                    image.alt = nft.name;
 
-                        // Update the cloned elements with NFT details
-                        const image = card.querySelector(".nft-image");
-                        image.src = nft.image;
-                        image.alt = nft.name;
+                    const nftName = card.querySelector(".nft-name");
+                    nftName.textContent = nft.name;
 
-                        const nftName = card.querySelector(".nft-name");
-                        nftName.textContent = nft.name;
+                    const nftDescription = card.querySelector(".nft-description");
+                    const nftID = nftDescription.querySelector(".tokenID");
+                    nftID.textContent = tokenId;
+                    const cardNumber = nftDescription.querySelector(".card-number");
+                    cardNumber.textContent = nft.description['Card Number'];
 
-                        const nftDescription = card.querySelector(".nft-description");
-                        const cardNumber = nftDescription.querySelector(".card-number");
-                        cardNumber.textContent = nft.description['Card Number'];
+                    const rarity = nftDescription.querySelector(".rarity");
+                    rarity.textContent = nft.description.Rarity;
 
-                        const rarity = nftDescription.querySelector(".rarity");
-                        rarity.textContent = nft.description.Rarity;
+                    const cardType = nftDescription.querySelector(".card-type");
+                    cardType.textContent = nft.description['Card Type'];
 
-                        const cardType = nftDescription.querySelector(".card-type");
-                        cardType.textContent = nft.description['Card Type'];
+                    const hp = nftDescription.querySelector(".hp");
+                    hp.textContent = nft.description.HP;
 
-                        const hp = nftDescription.querySelector(".hp");
-                        hp.textContent = nft.description.HP;
+                    const stage = nftDescription.querySelector(".stage");
+                    stage.textContent = nft.description.Stage;
 
-                        const stage = nftDescription.querySelector(".stage");
-                        stage.textContent = nft.description.Stage;
+                    const cardText = nftDescription.querySelector(".card-text");
+                    cardText.textContent = nft.description['Card Text'];
 
-                        const cardText = nftDescription.querySelector(".card-text");
-                        cardText.textContent = nft.description['Card Text'];
+                    const attack1 = nftDescription.querySelector(".attack-1");
+                    attack1.textContent = nft.description['Attack 1'];
 
-                        const attack1 = nftDescription.querySelector(".attack-1");
-                        attack1.textContent = nft.description['Attack 1'];
+                    const attack2 = nftDescription.querySelector(".attack-2");
+                    attack2.textContent = nft.description['Attack 2'];
 
-                        const attack2 = nftDescription.querySelector(".attack-2");
-                        attack2.textContent = nft.description['Attack 2'];
+                    const weakness = nftDescription.querySelector(".weakness");
+                    weakness.textContent = nft.description.Weakness;
 
-                        const weakness = nftDescription.querySelector(".weakness");
-                        weakness.textContent = nft.description.Weakness;
+                    const retreatCost = nftDescription.querySelector(".retreat-cost");
+                    retreatCost.textContent = nft.description['Retreat Cost'];
 
-                        const retreatCost = nftDescription.querySelector(".retreat-cost");
-                        retreatCost.textContent = nft.description['Retreat Cost'];
-
-                        // Append the card to the container
-                        nftContainer.appendChild(card);
-                    }
-                });
+                    // Append the card to the container
+                    nftContainer.appendChild(card);
+                }
+            });
         });
 
         function convertIPFSURL(ipfsURL) {

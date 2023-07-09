@@ -158,38 +158,24 @@ contract NFTAuction is ERC721URIStorage, Ownable {
         return liveAuctionsData;
     }
 
-    function getOwnedTokensMetadata(address owner) public view returns (string[] memory) {
+    struct TokenMetadata {
+        uint256 tokenId;
+        string tokenURI;
+    }
+
+    function getOwnedTokensMetadata(address owner) public view returns (TokenMetadata[] memory) {
         uint256 tokenCount = balanceOf(owner);
-        string[] memory metadata = new string[](tokenCount);
+        TokenMetadata[] memory ownedTokensMetadata = new TokenMetadata[](tokenCount);
 
         uint256 index = 0;
         for (uint256 i = 0; i < _tokenIds.current(); i++) {
             uint256 tokenId = i + 1;
             if (_exists(tokenId) && ownerOf(tokenId) == owner) {
-                metadata[index] = tokenURI(tokenId);
+                string memory tokenURI = tokenURI(tokenId);
+                ownedTokensMetadata[index] = TokenMetadata(tokenId, tokenURI);
                 index++;
             }
         }
-        return metadata;
+        return ownedTokensMetadata;
     }
-
-
-    // function getOwnedTokens(address owner)
-    //     public
-    //     view
-    //     returns (uint256[] memory)
-    // {
-    //     uint256 tokenCount = balanceOf(owner);
-    //     uint256[] memory ownedTokens = new uint256[](tokenCount);
-
-    //     uint256 index = 0;
-    //     for (uint256 i = 0; i < _tokenIds.current(); i++) {
-    //         uint256 tokenId = i + 1;
-    //         if (_exists(tokenId) && ownerOf(tokenId) == owner) {
-    //             ownedTokens[index] = tokenId;
-    //             index++;
-    //         }
-    //     }
-    //     return ownedTokens;
-    // }
 }
