@@ -27,7 +27,8 @@ contract NFTAuction is ERC721URIStorage, Ownable {
 
     constructor() ERC721("DERBASSI TOKEN", "DB") {}
 
-    function createToken(string memory _uri) public onlyOwner {
+    function createToken(string memory _uri) public {
+        
         _tokenIds.increment();
         uint256 tokenId = _tokenIds.current();
         _mint(msg.sender, tokenId);
@@ -177,5 +178,20 @@ contract NFTAuction is ERC721URIStorage, Ownable {
             }
         }
         return ownedTokensMetadata;
+    }
+    function getTokensMetadata() public view returns (TokenMetadata[] memory) {
+        uint256 tokenCount = _tokenIds.current();
+        TokenMetadata[] memory TokensMetadata = new TokenMetadata[](tokenCount);
+
+        uint256 index = 0;
+        for (uint256 i = 0; i < _tokenIds.current(); i++) {
+            uint256 tokenId = i + 1;
+            if (_exists(tokenId)) {
+                string memory tokenURI = tokenURI(tokenId);
+                TokensMetadata[index] = TokenMetadata(tokenId, tokenURI);
+                index++;
+            }
+        }
+        return TokensMetadata;
     }
 }

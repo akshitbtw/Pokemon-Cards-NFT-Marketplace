@@ -5,13 +5,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     let contract;
     try {
         contract = await contractPromise;
-        let account;
-        const accounts = await ethereum.request({ method: 'eth_requestAccounts' }).then(accounts => {
-            account = accounts[0];
-            console.log(account);
-        });
-        // const result = await contract.methods.createToken('ipfs://bafkreiguilveopoz73amweqrsqdtacnake4z3ji5jlmtohgdiiypvf6zry').send({ from: account });
-        contract.methods.getOwnedTokensMetadata(account).call()
+        contract.methods.getTokensMetadata().call()
             .then(result => {
                 // console.log(result);
                 getMetaData(result);
@@ -25,10 +19,11 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     ethereum.on("accountsChanged", function (accounts) {
         // Update button text when account changes
-        let account = accounts[0];
-        contract.methods.getOwnedTokensMetadata(account).call()
+      
+        contract.methods.getTokensMetadata().call()
             .then(result => {
-                window.location.reload();
+                    window.location.reload();
+                  
             })
             .catch(error => {
                 console.error('Error calling view function:', error);
