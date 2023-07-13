@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>NFT Upload</title>
+</head>
+<body>
+    <div id="navbar-placeholder"></div>
+<form id="uploadForm">
+    <input type="file" id="imageUpload" accept="image/*"><br>
+    <input type="text" id="name" placeholder="name"><br>
+    <input type="text" id="cardnumber" placeholder="cardnumber"><br>
+    <input type="text" id="rarity" placeholder="rarity"><br>
+    <input type="text" id="cardtype" placeholder="cardtype"><br>
+    <input type="text" id="hp" placeholder="hp"><br>
+    <input type="text" id="stage" placeholder="stage"><br>
+    <input type="text" id="cardtext" placeholder="cardtext"><br>
+    <input type="text" id="attack1" placeholder="attack1"><br>
+    <input type="text" id="attack2" placeholder="attack2"><br>
+    <input type="text" id="weakness" placeholder="weakness"><br>
+    <input type="text" id="retreatcost" placeholder="retreatcost"><br>
+    <!-- Add more fields as needed -->
+    <button type="submit">Upload</button>
+    <div id="ipfsUrl"></div>
+    
+</form>
+<script type="module" src="/connectToContract.js"></script>
+<script type="module" src="create.js"></script>
+<script src="navbar.js"></script>
+</body>
+</html>
+
+
