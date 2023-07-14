@@ -27,8 +27,7 @@ contract NFTAuction is ERC721URIStorage, Ownable {
 
     constructor() ERC721("DERBASSI TOKEN", "DB") {}
 
-    function createToken(string memory _uri) public {
-        
+    function createToken(string memory _uri) public onlyOwner {
         _tokenIds.increment();
         uint256 tokenId = _tokenIds.current();
         _mint(msg.sender, tokenId);
@@ -164,9 +163,15 @@ contract NFTAuction is ERC721URIStorage, Ownable {
         string tokenURI;
     }
 
-    function getOwnedTokensMetadata(address owner) public view returns (TokenMetadata[] memory) {
+    function getOwnedTokensMetadata(address owner)
+        public
+        view
+        returns (TokenMetadata[] memory)
+    {
         uint256 tokenCount = balanceOf(owner);
-        TokenMetadata[] memory ownedTokensMetadata = new TokenMetadata[](tokenCount);
+        TokenMetadata[] memory ownedTokensMetadata = new TokenMetadata[](
+            tokenCount
+        );
 
         uint256 index = 0;
         for (uint256 i = 0; i < _tokenIds.current(); i++) {
@@ -179,6 +184,7 @@ contract NFTAuction is ERC721URIStorage, Ownable {
         }
         return ownedTokensMetadata;
     }
+
     function getTokensMetadata() public view returns (TokenMetadata[] memory) {
         uint256 tokenCount = _tokenIds.current();
         TokenMetadata[] memory TokensMetadata = new TokenMetadata[](tokenCount);
@@ -193,5 +199,70 @@ contract NFTAuction is ERC721URIStorage, Ownable {
             }
         }
         return TokensMetadata;
+    }
+
+    // Returns all the cards owned by the owner and not auctioned yet
+    function getAuctionedNotEndedTokens(address owner)
+        public
+        view
+        returns (TokenMetadata[] memory)
+    {
+        TokenMetadata[] memory auctionedTokens = new TokenMetadata[](
+            liveAuctions.length
+        );
+        for (uint256 i = 0; i < liveAuctions.length; i++) {
+            uint256 tokenId = liveAuctions[i];
+            Auction storage auction = auctions[tokenId];
+            if (
+                auction.owner == owner &&
+                block.timestamp >= auction.auctionEndTime &&
+                !auction.ended
+            ) {
+                string memory tokenURI = ERC721URIStorage.tokenURI(tokenId); // Call tokenURI from ERC721URIStorage contract
+                auctionedTokens[i] = TokenMetadata(tokenId, tokenURI);
+            }
+        }
+        return auctionedTokens;
+    }
+
+    function getOwnedNotAuctionedTokens(address owner)
+        public
+        view
+        returns (TokenMetadata[] memory)
+    {
+        uint256 tokenCount = balanceOf(owner);
+        TokenMetadata[] memory ownedTokens = new TokenMetadata[](tokenCount);
+
+        uint256 index = 0;
+        for (uint256 i = 0; i < _tokenIds.current(); i++) {
+            uint256 tokenId = i + 1;
+            if (_exists(tokenId) && ownerOf(tokenId) == owner) {
+                Auction storage auction = auctions[tokenId];
+                if (!auction.ended && auction.auctionEndTime == 0) {
+                    ownedTokens[index] = TokenMetadata(
+                        tokenId,
+                        tokenURI(tokenId)
+                    );
+                    index++;
+                }
+            }
+        }
+        return ownedTokens;
+    }
+
+    event AuctionExpired(uint256 tokenId, string tokenURI);
+
+    function getAuctionedNotEndedTokensEmit(address owner) public {
+        for (uint256 i = 0; i < liveAuctions.length; i++) {
+            uint256 tokenId = liveAuctions[i];
+            Auction storage auction = auctions[tokenId];
+            if (
+                auction.owner == owner &&
+                block.timestamp >= auction.auctionEndTime &&
+                !auction.ended
+            ) {
+                emit AuctionExpired(tokenId, tokenURI(tokenId));
+            }
+        }
     }
 }

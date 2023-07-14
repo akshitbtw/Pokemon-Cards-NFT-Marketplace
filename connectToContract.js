@@ -2,10 +2,11 @@ import { contractAddress, contractABI } from './contractInfo.js';
 import Web3 from 'web3/dist/web3.min.js';
 
 let contract;
+let web3js;
 
 async function connectToContract() {
   // Create a new instance of the Web3 library
-  const web3js = new Web3(window.ethereum);
+  web3js = new Web3(window.ethereum);
 
   // Connect to the contract using the contract ABI and address
   contract = new web3js.eth.Contract(contractABI, contractAddress);
@@ -13,11 +14,25 @@ async function connectToContract() {
   console.log('Contract instance created successfully');
   console.log('Contract address:', contract.options.address);
 
+  // // Subscribe to the "AuctionExpired" event
+  // contract.events.AuctionExpired()
+  //   .on('data', event => {
+  //     console.log('AuctionExpired event emitted:', event.returnValues);
+  //     // Access the emitted values
+  //     const { tokenId, tokenURI } = event.returnValues;
+  //     console.log('Token ID:', tokenId);
+  //     console.log('Token URI:', tokenURI);
+  //     // Handle the emitted values as per your requirement
+  //   })
+  //   .on('error', error => {
+  //     console.error('Error listening to AuctionExpired event:', error);
+  //   });
+
   // Return the contract instance
   return contract;
 }
 export const contractPromise = connectToContract();
-
+export { web3js };
 
 
 
