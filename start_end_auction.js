@@ -5,6 +5,54 @@ document.addEventListener('DOMContentLoaded', async () => {
     const nftContainer2 = document.getElementById("nft-container-2");
     const nftCardTemplate = document.getElementById("nft-card-template");
     let contract; let account;
+
+    
+
+    let ownerAddress;
+    let currentAddress;
+    function match(){
+        ethereum.request({ method: 'eth_requestAccounts' }).then(function(accounts) {
+                account = accounts[0];
+                currentAddress = account;
+        });
+          contractPromise.then(function(contract) {
+            contract.methods.getContractOwner().call()
+              .then(function(result) {
+                ownerAddress = result;
+                const isContractOwner = currentAddress.toLowerCase() === ownerAddress.toLowerCase();
+        
+                if (!isContractOwner) {
+                    var overlay = document.getElementById("major");
+                    overlay.remove();
+                    setTimeout(function() {
+                        window.alert("User Authentication Failure");
+                        // history.back(); // change it
+                        window.location="index.html";
+                      }, 500);               
+                }
+        
+        
+        
+              })
+              .catch(function(error) {
+                console.error('Error calling view function:', error);
+              });
+          })
+          .catch(function(error) {
+            console.error('Error connecting to contract:', error);
+          });
+        }
+        match();
+        ethereum.on("accountsChanged", function (accounts) {
+            // Refresh when account changes
+            window.location.reload();
+        });
+
+
+
+
+
+
     try {
         contract = await contractPromise;
         account;

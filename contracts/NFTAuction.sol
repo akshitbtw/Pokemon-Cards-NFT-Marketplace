@@ -19,13 +19,15 @@ contract NFTAuction is ERC721URIStorage, Ownable {
         uint256 highestBid;
         bool ended;
     }
-
+    address public contractOwner;
     uint256 private _auctionDuration = 1 minutes;
     mapping(uint256 => Auction) public auctions;
     mapping(uint256 => mapping(address => uint256)) private _totalBids;
     uint256[] public liveAuctions;
-
-    constructor() ERC721("DERBASSI TOKEN", "DB") {}
+    
+    constructor() ERC721("DERBASSI TOKEN", "DB") {
+        contractOwner = msg.sender;
+    }
 
     function createToken(string memory _uri) public onlyOwner {
         _tokenIds.increment();
@@ -265,4 +267,9 @@ contract NFTAuction is ERC721URIStorage, Ownable {
             }
         }
     }
+
+    function getContractOwner() public view returns (address) {
+        return contractOwner;
+    }
+
 }

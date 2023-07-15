@@ -4,8 +4,10 @@
     <title>NFT Upload</title>
 </head>
 <body>
+    <div id="major">
     <div id="navbar-placeholder"></div>
 <form id="uploadForm">
+    
     <input type="file" id="imageUpload" accept="image/*"><br>
     <input type="text" id="name" placeholder="name"><br>
     <input type="text" id="cardnumber" placeholder="cardnumber"><br>
@@ -23,9 +25,10 @@
     <div id="ipfsUrl"></div>
     
 </form>
+</div>
 <script type="module" src="/connectToContract.js"></script>
 <script type="module" src="create.js"></script>
-<script src="navbar.js"></script>
+<script type="module" src="navbar.js"></script>
 </body>
 </html>
 

@@ -2,6 +2,8 @@ import { contractPromise } from './connectToContract.js';
 document.addEventListener('DOMContentLoaded', async () => {
     let contract;
     let account;
+    let ownerAddress;
+    let currentAddress;
     try {
         contract = await contractPromise;
         // let account;
@@ -61,7 +63,46 @@ document.addEventListener('DOMContentLoaded', async () => {
         await contract.methods.createToken("ipfs://" + ipfsUrl2 + "/blob").send({ from: account });
 
     }
+    function match(){
+        ethereum.request({ method: 'eth_requestAccounts' }).then(function(accounts) {
+                account = accounts[0];
+                currentAddress = account;
+        });
+          contractPromise.then(function(contract) {
+            contract.methods.getContractOwner().call()
+              .then(function(result) {
+                ownerAddress = result;
+                const isContractOwner = currentAddress.toLowerCase() === ownerAddress.toLowerCase();
+        
+                if (isContractOwner) {
+                document.getElementById("uploadForm").addEventListener("submit", handleFormSubmit);
+                } else {
+                    var overlay = document.getElementById("major");
+                    overlay.remove();
+                    setTimeout(function() {
+                        window.alert("User Authentication Failure");
+                        // history.back(); // change it
+                        window.location="index.html";
+                      }, 500);        
+                }
+        
+        
+        
+              })
+              .catch(function(error) {
+                console.error('Error calling view function:', error);
+              });
+          })
+          .catch(function(error) {
+            console.error('Error connecting to contract:', error);
+          });
+        }
+        match();
+        ethereum.on("accountsChanged", function (accounts) {
+            // Update button text when account changes
+            window.location.reload();
+        });
 
 
-    document.getElementById("uploadForm").addEventListener("submit", handleFormSubmit);
+    
 });
