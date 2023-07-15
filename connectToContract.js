@@ -14,20 +14,6 @@ async function connectToContract() {
   console.log('Contract instance created successfully');
   console.log('Contract address:', contract.options.address);
 
-  // // Subscribe to the "AuctionExpired" event
-  // contract.events.AuctionExpired()
-  //   .on('data', event => {
-  //     console.log('AuctionExpired event emitted:', event.returnValues);
-  //     // Access the emitted values
-  //     const { tokenId, tokenURI } = event.returnValues;
-  //     console.log('Token ID:', tokenId);
-  //     console.log('Token URI:', tokenURI);
-  //     // Handle the emitted values as per your requirement
-  //   })
-  //   .on('error', error => {
-  //     console.error('Error listening to AuctionExpired event:', error);
-  //   });
-
   // Return the contract instance
   return contract;
 }

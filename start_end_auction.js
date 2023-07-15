@@ -6,47 +6,47 @@ document.addEventListener('DOMContentLoaded', async () => {
     const nftCardTemplate = document.getElementById("nft-card-template");
     let contract; let account;
 
-    
+
 
     let ownerAddress;
     let currentAddress;
-    function match(){
-        ethereum.request({ method: 'eth_requestAccounts' }).then(function(accounts) {
-                account = accounts[0];
-                currentAddress = account;
+    function match() {
+        ethereum.request({ method: 'eth_requestAccounts' }).then(function (accounts) {
+            account = accounts[0];
+            currentAddress = account;
         });
-          contractPromise.then(function(contract) {
+        contractPromise.then(function (contract) {
             contract.methods.getContractOwner().call()
-              .then(function(result) {
-                ownerAddress = result;
-                const isContractOwner = currentAddress.toLowerCase() === ownerAddress.toLowerCase();
-        
-                if (!isContractOwner) {
-                    var overlay = document.getElementById("major");
-                    overlay.remove();
-                    setTimeout(function() {
-                        window.alert("User Authentication Failure");
-                        // history.back(); // change it
-                        window.location="index.html";
-                      }, 500);               
-                }
-        
-        
-        
-              })
-              .catch(function(error) {
-                console.error('Error calling view function:', error);
-              });
-          })
-          .catch(function(error) {
-            console.error('Error connecting to contract:', error);
-          });
-        }
-        match();
-        ethereum.on("accountsChanged", function (accounts) {
-            // Refresh when account changes
-            window.location.reload();
-        });
+                .then(function (result) {
+                    ownerAddress = result;
+                    const isContractOwner = currentAddress.toLowerCase() === ownerAddress.toLowerCase();
+
+                    if (!isContractOwner) {
+                        var overlay = document.getElementById("major");
+                        overlay.remove();
+                        setTimeout(function () {
+                            window.alert("User Authentication Failure");
+                            // history.back(); // change it
+                            window.location = "index.html";
+                        }, 500);
+                    }
+
+
+
+                })
+                .catch(function (error) {
+                    console.error('Error calling view function:', error);
+                });
+        })
+            .catch(function (error) {
+                console.error('Error connecting to contract:', error);
+            });
+    }
+    match();
+    ethereum.on("accountsChanged", function (accounts) {
+        // Refresh when account changes
+        window.location.reload();
+    });
 
 
 
@@ -58,7 +58,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         account;
         const accounts = await ethereum.request({ method: 'eth_requestAccounts' }).then(accounts => {
             account = accounts[0];
-            console.log(account);
+            // console.log(account);
         });
         await contract.methods.getOwnedNotAuctionedTokens(account).call()
             .then(result => {
@@ -77,41 +77,14 @@ document.addEventListener('DOMContentLoaded', async () => {
             .catch(error => {
                 console.error('Error calling view function:', error);
             });
-        // Call the getAuctionedNotEndedTokens function
-        // contract.methods.getAuctionedNotEndedTokensEmit(account).call()
-        //     .then(() => {
-        //         console.log('getAuctionedNotEndedTokensEmit function called successfully');
-        //     })
-        //     .catch(error => {
-        //         console.error('Error calling getAuctionedNotEndedTokensEmit function:', error);
-        //     });
-
-        // contract.methods.getAuctionedNotEndedTokens(account).call()
-        //     .then(result => {
-        //         console.log(result);
-        //         // getMetaData(result, nftContainer2);
-        //     })
-        //     .catch(error => {
-        //         console.error('Error calling view function:', error);
-        //     });
-
-        // await contract.methods.getLiveAuctions().call()
-        // .then(result => {
-        //     console.log(result);
-        //     // getMetaData(result, nftContainer2);
-        // })
-        // .catch(error => {
-        //     console.error('Error calling view function:', error);
-        // });
-
     } catch (error) {
         console.error('Error connecting to contract:', error);
     }
 
-    ethereum.on("accountsChanged", function (accounts) {
+    ethereum.on("accountsChanged", async function (accounts) {
         // Update button text when account changes
         account = accounts[0];
-        contract.methods.getOwnedNotAuctionedTokens(account).call()
+        await contract.methods.getOwnedNotAuctionedTokens(account).call()
             .then(result => {
                 console.log('getOwnedNotAuctionedTokens ' + result);
                 getMetaData(result, nftContainer1);
@@ -119,9 +92,10 @@ document.addEventListener('DOMContentLoaded', async () => {
             .catch(error => {
                 console.error('Error calling view function:', error);
             });
-        contract.methods.getAuctionedNotEndedTokens(account).call()
+
+        await contract.methods.getAuctionedNotEndedTokens(account).call()
             .then(result => {
-                console.log('getAuctionedNotEndedTokens ' + result);
+                // console.log('getAuctionedNotEndedTokens ' + result);
                 getMetaData(result, nftContainer2);
             })
             .catch(error => {
@@ -200,6 +174,10 @@ document.addEventListener('DOMContentLoaded', async () => {
                                             // Transaction submitted
                                             console.log('Transaction hash:', hash);
                                         })
+                                        .on('confirmation', function (confirmationNumber, receipt) {
+                                            console.log('Confirmation number:', confirmationNumber);
+                                            console.log('Receipt:', receipt);
+                                        })
                                         .on('error', (error) => {
                                             // Error occurred
                                             console.error('Error:', error);
@@ -215,7 +193,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                             auctionBtn.textContent = 'End Auction';
                             auctionBtn.addEventListener('click', async () => {
                                 await contract.methods.endAuction(nftID.textContent)
-                                    .send({ from: account , gas: 200000 })
+                                    .send({ from: account })
                                     .on('transactionHash', function (hash) {
                                         console.log('Transaction hash:', hash);
                                     })
@@ -226,7 +204,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                                     .on('error', function (error) {
                                         console.error('Error:', error);
                                     });
-                                    window.location.reload();
+                                window.location.reload();
                             });
                         }
                         // Append the card to the container
@@ -266,6 +244,4 @@ document.addEventListener('DOMContentLoaded', async () => {
             }
         }
     }
-
-
 });

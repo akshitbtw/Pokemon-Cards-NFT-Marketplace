@@ -176,3 +176,8 @@ button:hover {
   max-height: 100%;
   object-fit: cover;
 }
+
+.nft-image-container {
+  width: 219px; /* Adjust the value to your desired size */
+  height: 20px; /* Adjust the value to your desired size */
+}
