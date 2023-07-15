@@ -13,6 +13,8 @@
   text-align: center;
   padding: 14px 16px;
   text-decoration: none;
+  width:140px;
+  /* padding-left: 20px; */
 }
 
 /* The subnavigation menu */
@@ -31,6 +33,7 @@
   background-color: inherit;
   font-family: inherit;
   margin: 0;
+  width:135px;
 }
 
 /* Add a red background color to navigation links on hover */
@@ -44,7 +47,7 @@
 .subnav-content {
   display: none;
   position: fixed;
-  left: 52%;
+  left: 63%;
   background-color: rgb(56, 56, 56);
   width: 14.5%;
   z-index: 1;
