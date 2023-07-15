@@ -5,30 +5,78 @@
 </head>
 <body>
     <div id="major">
-    <div id="navbar-placeholder"></div>
-<form id="uploadForm">
-    
-    <input type="file" id="imageUpload" accept="image/*"><br>
-    <input type="text" id="name" placeholder="name"><br>
-    <input type="text" id="cardnumber" placeholder="cardnumber"><br>
-    <input type="text" id="rarity" placeholder="rarity"><br>
-    <input type="text" id="cardtype" placeholder="cardtype"><br>
-    <input type="text" id="hp" placeholder="hp"><br>
-    <input type="text" id="stage" placeholder="stage"><br>
-    <input type="text" id="cardtext" placeholder="cardtext"><br>
-    <input type="text" id="attack1" placeholder="attack1"><br>
-    <input type="text" id="attack2" placeholder="attack2"><br>
-    <input type="text" id="weakness" placeholder="weakness"><br>
-    <input type="text" id="retreatcost" placeholder="retreatcost"><br>
-    <!-- Add more fields as needed -->
-    <button type="submit">Upload</button>
-    <div id="ipfsUrl"></div>
-    
-</form>
-</div>
-<script type="module" src="/connectToContract.js"></script>
-<script type="module" src="create.js"></script>
-<script type="module" src="navbar.js"></script>
+        <div id="navbar-placeholder"></div>
+        <br>
+        <form id="uploadForm">
+            <label for="imageUpload">Image:</label>
+            <input type="file" id="imageUpload" accept="image/*">
+            <div id="imagePreview"></div>
+            
+            <label for="name">Name:</label>
+            <input type="text" id="name" placeholder="Enter name">
+            
+            <label for="cardnumber">Card Number:</label>
+            <input type="text" id="cardnumber" placeholder="Enter card number">
+            
+            <label for="rarity">Rarity:</label>
+            <input type="text" id="rarity" placeholder="Enter rarity">
+            
+            <label for="cardtype">Card Type:</label>
+            <input type="text" id="cardtype" placeholder="Enter card type">
+            
+            <label for="hp">HP:</label>
+            <input type="text" id="hp" placeholder="Enter HP">
+            
+            <label for="stage">Stage:</label>
+            <input type="text" id="stage" placeholder="Enter stage">
+            
+            <label for="cardtext">Card Text:</label>
+            <input type="text" id="cardtext" placeholder="Enter card text">
+            
+            <label for="attack1">Attack 1:</label>
+            <input type="text" id="attack1" placeholder="Enter attack 1">
+            
+            <label for="attack2">Attack 2:</label>
+            <input type="text" id="attack2" placeholder="Enter attack 2">
+            
+            <label for="weakness">Weakness:</label>
+            <input type="text" id="weakness" placeholder="Enter weakness">
+            
+            <label for="retreatcost">Retreat Cost:</label>
+            <input type="text" id="retreatcost" placeholder="Enter retreat cost">
+            
+            <button type="submit">Upload</button>
+            <div id="ipfsUrl"></div>
+        </form>
+    </div>
+    <script>
+        // Get the image upload input and the image preview element
+        const imageUpload = document.getElementById('imageUpload');
+        const imagePreview = document.getElementById('imagePreview');
+
+        // Add an event listener to the image upload input
+        imageUpload.addEventListener('change', (e) => {
+          // Get the selected image file
+          const file = e.target.files[0];
+
+          // Create a FileReader object
+          const reader = new FileReader();
+
+          // Read the image file and set it as the source of the image preview element
+          reader.onload = () => {
+            const imageURL = reader.result;
+            imagePreview.innerHTML = `<img src="${imageURL}" alt="Image Preview">`;
+          };
+
+          if (file) {
+            // Read the image file as a data URL
+            reader.readAsDataURL(file);
+          }
+        });
+    </script>
+    <script type="module" src="/connectToContract.js"></script>
+    <script type="module" src="create.js"></script>
+    <script type="module" src="navbar.js"></script>
 </body>
 </html>
 

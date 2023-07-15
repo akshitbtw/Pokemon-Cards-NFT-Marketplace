@@ -96,3 +96,83 @@
 .separator:not(:empty)::after {
   margin-left: .25em;
 }
+/* CSS styles for NFT Upload form */
+
+/* Basic styling for the form */
+#uploadForm {
+  display: flex;
+  flex-direction: column;
+  max-width: 600px; /* Adjust the max-width as desired */
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f8f8f8;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+/* Styling for the input fields */
+input[type="file"],
+input[type="text"] {
+  margin-bottom: 10px;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  width: 100%; /* Set the width to 100% */
+}
+
+/* Styling for the button */
+button {
+  padding: 10px 20px;
+  background-color: #2e2e2e; /* Grayish color */
+  color: #ffffff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #000000; /* Darker gray on hover */
+  color:white;
+}
+
+/* Styling for the IPFS URL display */
+#ipfsUrl {
+  margin-top: 20px;
+}
+
+/* Animation for textboxes and button on hover */
+input[type="text"]:hover,
+button:hover {
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+}
+
+/* Additional animations for textboxes and button */
+input[type="text"],
+button {
+  transition: transform 0.3s ease;
+}
+
+input[type="text"]:hover,
+input[type="text"]:focus,
+button:hover {
+  transform: scale(1.05);
+}
+
+/* Styling for the image preview */
+#imagePreview {
+  margin-top: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  height: 200px;
+  overflow: hidden;
+}
+
+#imagePreview img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: cover;
+}
