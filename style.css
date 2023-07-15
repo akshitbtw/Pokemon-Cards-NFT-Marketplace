@@ -44,9 +44,9 @@
 .subnav-content {
   display: none;
   position: fixed;
-  left: 50%;
+  left: 52%;
   background-color: rgb(56, 56, 56);
-  width: 19%;
+  width: 14.5%;
   z-index: 1;
   margin-right: 0;
 }
@@ -55,9 +55,10 @@
 .subnav-content a {
   float: left;
   color: white;
-  padding-left: 6%;
-  padding-right: 6%;
+  padding-left: 10%;
+  padding-right: 10%;
   text-decoration: none;
+  width: 100%;
 
 }
 
