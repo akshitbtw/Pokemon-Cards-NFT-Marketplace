@@ -72,9 +72,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     });
 
     function createAuctionCard(auction, metadata) {
-        // Implement your logic to create an NFT card using the provided template
-        // and populate it with auction and metadata details
-        // Example:
+
         const template = document.getElementById('nft-card-template');
         const nftCard = template.content.cloneNode(true);
 
@@ -83,19 +81,38 @@ document.addEventListener('DOMContentLoaded', async () => {
         nftCard.querySelector('.nft-name').textContent = metadata.name;
         nftCard.querySelector('.nft-owner').textContent = auction.owner;
         nftCard.querySelector('.nft-starting-price').textContent = `${web3js.utils.fromWei(auction.startingPrice, 'ether')} ETH`;
-        nftCard.querySelector('.nft-end-time').textContent = formatEpochTime(auction.auctionEndTime);
-        if(auction.highestBidder === '0x0000000000000000000000000000000000000000') 
-        nftCard.querySelector('.nft-highest-bidder').textContent = "No Bids Yet";
+        // nftCard.querySelector('.nft-end-time').textContent = formatEpochTime(auction.auctionEndTime);
+        if (auction.highestBidder === '0x0000000000000000000000000000000000000000')
+            nftCard.querySelector('.nft-highest-bidder').textContent = "No Bids Yet";
         else nftCard.querySelector('.nft-highest-bidder').textContent = auction.highestBidder;
         nftCard.querySelector('.nft-highest-bid').textContent = auction.highestBid;
 
         const viewDetailsButton = nftCard.querySelector('.view-details-btn');
-        // const myModal = document.getElementById('nft-details-modal');
+        const myModal = new bootstrap.Modal('#nft-details-modal');
         viewDetailsButton.addEventListener('click', () => {
-            // Handle the logic to display the NFT details in a modal or other UI element
-            console.log("view nft details");
-            // const myModal = new bootstrap.Modal(document.getElementById('nftDetailsModal'), backdrop);
-            // myModal.show();
+            const modalBody = document.querySelector(".modal-body");
+            const nftDetails = modalBody.querySelector(".nft-details");
+            nftDetails.querySelector('.nft-name').textContent = metadata.name;
+            const nftDescription = nftDetails.querySelector(".nft-description");
+            nftDescription.querySelector(".tokenID").textContent = auction.tokenId;
+
+            nftDescription.querySelector(".card-number").textContent = metadata.description['Card Number'];
+            nftDescription.querySelector(".rarity").textContent = metadata.description.Rarity;
+            nftDescription.querySelector(".card-type").textContent = metadata.description['Card Type'];
+            nftDescription.querySelector(".hp").textContent = metadata.description.HP;
+            nftDescription.querySelector(".stage").textContent = metadata.description.Stage;
+            nftDescription.querySelector(".card-text").textContent = metadata.description['Card Text'];
+            nftDescription.querySelector(".attack-1").textContent = metadata.description['Attack 1'];
+            nftDescription.querySelector(".attack-2").textContent = metadata.description['Attack 2'];
+            nftDescription.querySelector(".weakness").textContent = metadata.description.Weakness;
+            nftDescription.querySelector(".retreat-cost").textContent = metadata.description['Retreat Cost'];
+
+            myModal.show();
+
+            // event listener for modal close button
+            document.querySelector('.btn-close').addEventListener('click', () => {
+                myModal.hide();
+            });
         });
 
         const placeBidButton = nftCard.querySelector('.place-bid-btn');
@@ -142,11 +159,15 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     }
 
-    function formatEpochTime(epochTimestamp) {
-        const date = new Date(epochTimestamp * 1000); // Convert epoch to milliseconds
-        const hours = date.getHours().toString().padStart(2, '0');
-        const minutes = date.getMinutes().toString().padStart(2, '0');
-        const seconds = date.getSeconds().toString().padStart(2, '0');
-        return `${hours}:${minutes}:${seconds}`;
+    function formatEpochTime(expirationTimestamp) {
+        const currentTime = Math.floor(Date.now() / 1000); // Current time in seconds
+        const timeRemaining = Math.max(0, expirationTimestamp - currentTime); // Set to 0 if negative
+
+        // Calculate hours, minutes, and seconds from time remaining
+        const hours = Math.floor(timeRemaining / 3600);
+        const minutes = Math.floor((timeRemaining % 3600) / 60);
+        const seconds = timeRemaining % 60;
+
+        return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
     }
 });

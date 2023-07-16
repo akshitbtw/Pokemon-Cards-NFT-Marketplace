@@ -28,7 +28,7 @@
                             <p><strong>Owner:</strong> <span class="nft-owner font-weight-bold"></span></p>
                             <p><strong>Starting Price:</strong> <span
                                     class="nft-starting-price font-weight-bold"></span></p>
-                            <p><strong>Auction End Time:</strong> <span class="nft-end-time font-weight-bold"></span>
+                            <p><strong>Auction Time Remaining:</strong> <span class="nft-end-time font-weight-bold"></span>
                             </p>
                             <p><strong>Highest Bidder:</strong> <span
                                     class="nft-highest-bidder font-weight-bold"></span></p>
@@ -56,8 +56,36 @@
         </div>
 
         <!-- Vertically centered modal -->
-        <div class="modal-dialog modal-dialog-centered" id="nft-details-modal">
+        <div class="modal fade" id="nft-details-modal" tabindex="-1" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">NFT Details</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="nft-details">
+                            <h2 class="nft-name text-center"></h2>
+                            <ul class="nft-description">
+                                <li><strong>NFT Token ID:</strong> <span class="tokenID"></span></li>
+                                <li><strong>Card Number:</strong> <span class="card-number"></span></li>
+                                <li><strong>Rarity:</strong> <span class="rarity"></span></li>
+                                <li><strong>Card Type:</strong> <span class="card-type"></span></li>
+                                <li><strong>HP:</strong> <span class="hp"></span></li>
+                                <li><strong>Stage:</strong> <span class="stage"></span></li>
+                                <li><strong>Card Text:</strong> <span class="card-text"></span></li>
+                                <li><strong>Attack 1:</strong> <span class="attack-1"></span></li>
+                                <li><strong>Attack 2:</strong> <span class="attack-2"></span></li>
+                                <li><strong>Weakness:</strong> <span class="weakness"></span></li>
+                                <li><strong>Retreat Cost:</strong> <span class="retreat-cost"></span></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
+
 
     </div>
 </body>

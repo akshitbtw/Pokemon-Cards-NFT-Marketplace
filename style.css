@@ -112,7 +112,9 @@
 
 /* Styling for the input fields */
 input[type="file"],
-input[type="text"] {
+input[type="text"],
+input[type="number"]
+ {
   margin-bottom: 10px;
   padding: 10px;
   border: 1px solid #ddd;
@@ -143,18 +145,22 @@ button:hover {
 
 /* Animation for textboxes and button on hover */
 input[type="text"]:hover,
+input[type="number"]:hover,
 button:hover {
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
 }
 
 /* Additional animations for textboxes and button */
 input[type="text"],
+input[type="number"],
 button {
   transition: transform 0.3s ease;
 }
 
 input[type="text"]:hover,
 input[type="text"]:focus,
+input[type="number"]:hover,
+input[type="number"]:focus,
 button:hover {
   transform: scale(1.05);
 }
@@ -180,4 +186,8 @@ button:hover {
 .nft-image-container {
   width: 219px; /* Adjust the value to your desired size */
   height: 20px; /* Adjust the value to your desired size */
+}
+
+.nft-card-template {
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.634);
 }
