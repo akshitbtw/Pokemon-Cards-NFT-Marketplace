@@ -188,6 +188,6 @@ button:hover {
   height: 20px; /* Adjust the value to your desired size */
 }
 
-.nft-card-template {
-  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.634);
+.nft-card {
+  max-width: 100%;
 }

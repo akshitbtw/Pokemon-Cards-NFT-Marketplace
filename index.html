@@ -11,24 +11,25 @@
     <div id="major">
         <div id="navbar-placeholder"></div>
         <template id="nft-card-template">
-            <div class="nft-card row m-3 p-3 border border-black rounded-3">
-                <div class="col-4">
+            <div class="nft-card row m-3 p-2 border border-black rounded-3">
+                <div class="col-4 d-flex justify-content-center">
                     <div class="nft-image-container">
-                        <img class="nft-image img-fluid" src="" alt="NFT Image">
+                        <img class="nft-image img-fluid pt-4" src="" alt="NFT Image">
                         <div class="d-flex justify-content-center mt-2">
                             <button class="view-details-btn">View NFT Details</button>
                         </div>
                     </div>
                 </div>
                 <div class="col-8">
-                    <div class="nft-details p-3 d-flex flex-column justify-content-between h-100">
+                    <div class="nft-details p-3 d-flex flex-column justify-content-between">
                         <div>
                             <p><strong>Token ID:</strong> <span class="nft-token-id font-weight-bold"></span></p>
                             <p><strong>Name:</strong> <span class="nft-name font-weight-bold"></span></p>
                             <p><strong>Owner:</strong> <span class="nft-owner font-weight-bold"></span></p>
                             <p><strong>Starting Price:</strong> <span
                                     class="nft-starting-price font-weight-bold"></span></p>
-                            <p><strong>Auction Time Remaining:</strong> <span class="nft-end-time font-weight-bold"></span>
+                            <p><strong>Auction Time Remaining:</strong> <span
+                                    class="nft-end-time font-weight-bold"></span>
                             </p>
                             <p><strong>Highest Bidder:</strong> <span
                                     class="nft-highest-bidder font-weight-bold"></span></p>
@@ -39,9 +40,10 @@
                                 <div class="col">
                                     <input type="number" class="bid-input form-control"
                                         placeholder="Enter bid amount(ETH)">
+                                    <label class="auction-status-label"></label>
                                 </div>
                                 <div class="col">
-                                    <button class="place-bid-btn">Place Bid</button>
+                                    <button class="place-bid-btn align-item-center">Place Bid</button>
                                 </div>
                             </div>
                         </div>

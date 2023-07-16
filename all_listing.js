@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         contract = await contractPromise;
         contract.methods.getTokensMetadata().call()
             .then(result => {
-                console.log(result);
+                // console.log(result);
                 getMetaData(result);
             })
             .catch(error => {

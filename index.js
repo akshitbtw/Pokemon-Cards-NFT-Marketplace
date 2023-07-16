@@ -81,11 +81,38 @@ document.addEventListener('DOMContentLoaded', async () => {
         nftCard.querySelector('.nft-name').textContent = metadata.name;
         nftCard.querySelector('.nft-owner').textContent = auction.owner;
         nftCard.querySelector('.nft-starting-price').textContent = `${web3js.utils.fromWei(auction.startingPrice, 'ether')} ETH`;
-        // nftCard.querySelector('.nft-end-time').textContent = formatEpochTime(auction.auctionEndTime);
+
+        const nftEndTimeElement = nftCard.querySelector('.nft-end-time');
+        const endTime = new Date(auction.auctionEndTime * 1000);
+        const auctionStatusLabel = nftCard.querySelector('.auction-status-label');
+        const placeBidBtn = nftCard.querySelector('.place-bid-btn');
+
+        function updateRemainingTime() {
+            // console.log("time");
+            const currentTime = new Date().getTime();
+            const remainingTimeInSeconds = Math.max(0, endTime - currentTime) / 1000;
+
+            const hours = Math.floor(remainingTimeInSeconds / 3600);
+            const minutes = Math.floor((remainingTimeInSeconds % 3600) / 60);
+            const seconds = Math.floor(remainingTimeInSeconds % 60);
+
+            nftEndTimeElement.textContent = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+
+            if (remainingTimeInSeconds <= 0) {
+                clearInterval(interval);
+                bidInput.remove();
+                auctionStatusLabel.textContent = "The auction has ended, and the NFT will soon be transferred to the highest bidder. Participants can withdraw their bids once it is reflected in the withdrawal section of the website.";
+                placeBidBtn.remove();
+            }
+        }
+
+        const interval = setInterval(updateRemainingTime, 1000);
+
         if (auction.highestBidder === '0x0000000000000000000000000000000000000000')
             nftCard.querySelector('.nft-highest-bidder').textContent = "No Bids Yet";
         else nftCard.querySelector('.nft-highest-bidder').textContent = auction.highestBidder;
-        nftCard.querySelector('.nft-highest-bid').textContent = auction.highestBid;
+
+        nftCard.querySelector('.nft-highest-bid').textContent = `${web3js.utils.fromWei(auction.highestBid, 'ether')} ETH`;;
 
         const viewDetailsButton = nftCard.querySelector('.view-details-btn');
         const myModal = new bootstrap.Modal('#nft-details-modal');
@@ -117,9 +144,45 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         const placeBidButton = nftCard.querySelector('.place-bid-btn');
         const bidInput = nftCard.querySelector('.bid-input');
-        placeBidButton.addEventListener('click', () => {
-            // const bidAmount = bidInput.value;
-            console.log("place bid called");
+        placeBidButton.addEventListener('click', async () => {
+
+            const bidAmount = web3js.utils.toWei(bidInput.value.toString(), 'ether');
+            await contract.methods.placeBid(auction.tokenId).estimateGas({ value: bidAmount, from: account })
+                .then(async (estimatedGas) => {
+                    // Set the gas limit as a percentage of the estimated gas
+                    const gasLimit = Math.round(estimatedGas * 1.2); // Increase by 20% for buffer
+
+                    // Call the placeBid function with the dynamically set gas limit
+                    await contract.methods.placeBid(auction.tokenId).send({ value: bidAmount, from: account, gas: gasLimit })
+                        .on('transactionHash', (hash) => {
+                            console.log('Transaction hash:', hash);
+                        })
+                        .on('confirmation', (confirmationNumber, receipt) => {
+                            console.log('Confirmation number:', confirmationNumber);
+                            console.log('Receipt:', receipt);
+                            // Handle confirmation and receipt as needed
+                        })
+                        .on('error', (error) => {
+                            // console.error('Error:', error);
+                            // if (error.data && error.data.reason) {
+                            //     const revertReason = web3.utils.hexToUtf8(error.data.reason);
+                            //     alert(`Transaction reverted: ${revertReason}`);
+                            // } else {
+                            //     alert('Transaction reverted without reason.');
+                            // }
+                        });
+                        window.location.reload();
+
+                })
+                .catch((error) => {
+                    console.error('Error:', error.message);
+                    // if (error.data && error.data.reason) {
+                    //     const revertReason = web3.utils.hexToUtf8(error.data.reason);
+                    //     alert(`Transaction reverted: ${revertReason}`);
+                    // } else {
+                    //     alert('Transaction reverted without reason.');
+                    // }
+                });
         });
 
         return nftCard;
@@ -159,15 +222,4 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     }
 
-    function formatEpochTime(expirationTimestamp) {
-        const currentTime = Math.floor(Date.now() / 1000); // Current time in seconds
-        const timeRemaining = Math.max(0, expirationTimestamp - currentTime); // Set to 0 if negative
-
-        // Calculate hours, minutes, and seconds from time remaining
-        const hours = Math.floor(timeRemaining / 3600);
-        const minutes = Math.floor((timeRemaining % 3600) / 60);
-        const seconds = timeRemaining % 60;
-
-        return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-    }
 });

@@ -1,7 +1,6 @@
 // contractInfo.js
 
-// export const contractAddress = '0xC72f7c3D1c6ce75B9798FbA88F6a5a460C37F7AE';
-export const contractAddress = '0x3161244a12Dc9F361C8B8AEA066a8C3c62D903B7';
+export const contractAddress = '0x285d90810dDE4AF7a2ED1C8225393c7611c1fC1a';
 
 export const contractABI = [
   {
@@ -57,25 +56,6 @@ export const contractABI = [
       }
     ],
     "name": "ApprovalForAll",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "tokenId",
-        "type": "uint256"
-      },
-      {
-        "indexed": false,
-        "internalType": "string",
-        "name": "tokenURI",
-        "type": "string"
-      }
-    ],
-    "name": "AuctionExpired",
     "type": "event"
   },
   {
@@ -327,19 +307,6 @@ export const contractABI = [
       }
     ],
     "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "owner",
-        "type": "address"
-      }
-    ],
-    "name": "getAuctionedNotEndedTokensEmit",
-    "outputs": [],
-    "stateMutability": "nonpayable",
     "type": "function"
   },
   {

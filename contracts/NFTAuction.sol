@@ -19,8 +19,14 @@ contract NFTAuction is ERC721URIStorage, Ownable {
         uint256 highestBid;
         bool ended;
     }
+
+     struct TokenMetadata {
+        uint256 tokenId;
+        string tokenURI;
+    }
+
     address public contractOwner;
-    uint256 private _auctionDuration = 1 minutes;
+    uint256 private _auctionDuration = 1 hours;
     mapping(uint256 => Auction) public auctions;
     mapping(uint256 => mapping(address => uint256)) private _totalBids;
     uint256[] public liveAuctions;
@@ -108,13 +114,6 @@ contract NFTAuction is ERC721URIStorage, Ownable {
             payable(auction.owner).transfer(amount);
         }
 
-        // // Transfer NFT to the highest bidder
-        // _transfer(auction.owner, auction.highestBidder, tokenId);
-
-        // // Transfer auction funds to the owner
-        // uint256 amount = auction.highestBid;
-        // payable(auction.owner).transfer(amount);
-
         // Remove the auction from liveAuctions
         for (uint256 i = 0; i < liveAuctions.length; i++) {
             if (liveAuctions[i] == tokenId) {
@@ -141,15 +140,6 @@ contract NFTAuction is ERC721URIStorage, Ownable {
         payable(msg.sender).transfer(totalBid);
     }
 
-    // function getLiveAuctions() public view returns (Auction[] memory) {
-    //     Auction[] memory liveAuctionsData = new Auction[](liveAuctions.length);
-    //     for (uint256 i = 0; i < liveAuctions.length; i++) {
-    //         uint256 auctionId = liveAuctions[i];
-    //         liveAuctionsData[i] = auctions[auctionId];
-    //     }
-    //     return liveAuctionsData;
-    // }
-
     function getLiveAuctions() public view returns (Auction[] memory) {
         Auction[] memory liveAuctionsData = new Auction[](liveAuctions.length);
         for (uint256 i = 0; i < liveAuctions.length; i++) {
@@ -158,11 +148,6 @@ contract NFTAuction is ERC721URIStorage, Ownable {
             liveAuctionsData[i] = auction;
         }
         return liveAuctionsData;
-    }
-
-    struct TokenMetadata {
-        uint256 tokenId;
-        string tokenURI;
     }
 
     function getOwnedTokensMetadata(
