@@ -10,10 +10,10 @@ document.addEventListener('DOMContentLoaded', async () => {
     let ownerAddress;
     let currentAddress;
 
-    ethereum.on("accountsChanged", function (accounts) {
-        // Refresh when account changes
-        window.location.reload();
-    });
+    // ethereum.on("accountsChanged", function (accounts) {
+    //     // Refresh when account changes
+    //     window.location.reload();
+    // });
 
     try {
         contract = await contractPromise;
@@ -163,29 +163,39 @@ document.addEventListener('DOMContentLoaded', async () => {
                             // Handle confirmation and receipt as needed
                         })
                         .on('error', (error) => {
-                            // console.error('Error:', error);
-                            // if (error.data && error.data.reason) {
-                            //     const revertReason = web3.utils.hexToUtf8(error.data.reason);
-                            //     alert(`Transaction reverted: ${revertReason}`);
-                            // } else {
-                            //     alert('Transaction reverted without reason.');
-                            // }
+                            console.error('Error:', error);
+                            if (error.data && error.data.reason) {
+                                const revertReason = web3.utils.hexToUtf8(error.data.reason);
+                                alert(`Transaction reverted: ${revertReason}`);
+                            } else {
+                                alert('Transaction reverted without reason.');
+                            }
                         });
                         window.location.reload();
 
                 })
                 .catch((error) => {
-                    console.error('Error:', error.message);
-                    // if (error.data && error.data.reason) {
-                    //     const revertReason = web3.utils.hexToUtf8(error.data.reason);
-                    //     alert(`Transaction reverted: ${revertReason}`);
-                    // } else {
-                    //     alert('Transaction reverted without reason.');
-                    // }
+                    alert(extractErrorCode(error.message));
+                    console.log(error);
                 });
         });
 
         return nftCard;
+    }
+    function extractErrorCode(str){
+        const delimiter = '___'; //Replace it with the delimiter you used in the Solidity Contract.
+        const firstOccurence = str.indexOf(delimiter);
+        if(firstOccurence == -1) {
+            return "An error occured";
+        }
+    
+        const secondOccurence = str.indexOf(delimiter, firstOccurence + 1);
+        if(secondOccurence == -1) {
+            return "An error occured";
+        }
+    
+        //Okay so far
+        return str.substring(firstOccurence + delimiter.length, secondOccurence);
     }
 
     function addCardToContainer(nftCard) {

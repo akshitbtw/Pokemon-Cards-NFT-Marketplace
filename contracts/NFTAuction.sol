@@ -26,7 +26,7 @@ contract NFTAuction is ERC721URIStorage, Ownable {
     }
 
     address public contractOwner;
-    uint256 private _auctionDuration = 1 hours;
+    uint256 private _auctionDuration = 2 minutes;
     mapping(uint256 => Auction) public auctions;
     mapping(uint256 => mapping(address => uint256)) private _totalBids;
     uint256[] public liveAuctions;
@@ -48,12 +48,12 @@ contract NFTAuction is ERC721URIStorage, Ownable {
     ) public onlyOwner {
         require(
             ownerOf(tokenId) == msg.sender,
-            "Only the token owner can start an auction"
+            "___Only the token owner can start an auction___"
         );
-        require(!auctions[tokenId].ended, "Auction has already ended");
+        require(!auctions[tokenId].ended, "___Auction has already ended___");
         require(
             auctions[tokenId].auctionEndTime == 0,
-            "Auction already started"
+            "___Auction already started___"
         );
 
         uint256 auctionEndTime = block.timestamp + _auctionDuration;
@@ -72,22 +72,24 @@ contract NFTAuction is ERC721URIStorage, Ownable {
 
     function placeBid(uint256 tokenId) public payable {
         Auction storage auction = auctions[tokenId];
-        require(!auction.ended, "Auction has already ended");
-        require(msg.sender != auction.owner, "Owner cannot place a bid");
+        require(!auction.ended, "___Auction has already ended___");
+        require(msg.sender != auction.owner, "___Owner cannot place a bid___");
         require(
             msg.sender != auction.highestBidder,
-            "Highest bidder cannot place a bid"
+            "___Highest bidder cannot place a bid___"
         );
         require(
             block.timestamp < auction.auctionEndTime,
-            "Auction has already ended"
+            "___Auction has already ended___"
         );
 
         uint256 totalBid = _totalBids[tokenId][msg.sender] + msg.value;
         require(
             totalBid > auction.highestBid,
-            "Bid amount must be higher than the current highest bid"
+            "___Bid amount must be higher than the current highest bid___"
         );
+
+        require(totalBid >= auction.startingPrice,"___Current Bid Lower than Starting Price___");
 
         _totalBids[tokenId][msg.sender] = totalBid;
 
@@ -97,10 +99,10 @@ contract NFTAuction is ERC721URIStorage, Ownable {
 
     function endAuction(uint256 tokenId) public onlyOwner {
         Auction storage auction = auctions[tokenId];
-        require(!auction.ended, "Auction has already ended");
+        require(!auction.ended, "___Auction has already ended___");
         require(
             block.timestamp >= auction.auctionEndTime,
-            "Auction has not ended yet"
+            "___Auction has not ended yet___"
         );
 
         auction.ended = true;
@@ -126,15 +128,15 @@ contract NFTAuction is ERC721URIStorage, Ownable {
 
     function withdraw(uint256 tokenId) public {
         Auction storage auction = auctions[tokenId];
-        require(auction.ended, "Auction has not ended");
-        require(msg.sender != auction.owner, "Owner cannot withdraw");
+        require(auction.ended, "___Auction has not ended___");
+        require(msg.sender != auction.owner, "___Owner cannot withdraw___");
         require(
             msg.sender != auction.highestBidder,
-            "Highest bidder cannot withdraw"
+            "___Highest bidder cannot withdraw___"
         );
 
         uint256 totalBid = _totalBids[tokenId][msg.sender];
-        require(totalBid > 0, "No bid amount to withdraw");
+        require(totalBid > 0, "___No bid amount to withdraw___");
 
         _totalBids[tokenId][msg.sender] = 0;
         payable(msg.sender).transfer(totalBid);

@@ -46,10 +46,10 @@
 /* Style the subnav content - positioned absolute */
 .subnav-content {
   display: none;
-  position: fixed;
-  left: 63%;
+  position:fixed;
+  left: auto;
   background-color: rgb(56, 56, 56);
-  width: 14.5%;
+  width:auto;
   z-index: 1;
   margin-right: 0;
 }
@@ -58,8 +58,8 @@
 .subnav-content a {
   float: left;
   color: white;
-  padding-left: 10%;
-  padding-right: 10%;
+  padding-left: 1%;
+  padding-right: 1%;
   text-decoration: none;
   width: 100%;
 
