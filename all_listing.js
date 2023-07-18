@@ -3,6 +3,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const nftContainer = document.getElementById("nft-container");
     const nftCardTemplate = document.getElementById("nft-card-template");
     let contract;
+
     try {
         contract = await contractPromise;
         contract.methods.getTokensMetadata().call()
@@ -19,12 +20,11 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     ethereum.on("accountsChanged", function (accounts) {
         // Update button text when account changes
-      
+
         contract.methods.getTokensMetadata().call()
-            .then(result => {
-                    window.location.reload();
-                  
-            })
+            .then(
+                window.location.reload()
+            )
             .catch(error => {
                 console.error('Error calling view function:', error);
             });
@@ -32,7 +32,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     function getMetaData(response) {
         response.forEach(item => {
             const tokenId = item[0];
-            fetchMetadata(item[1]).then(nft => {
+            fetchMetadata(item[1]).then(async nft => {
                 if (nft) {
                     // console.log(metadata);
                     // console.log(metadata.description);
@@ -49,6 +49,24 @@ document.addEventListener('DOMContentLoaded', async () => {
                     const nftDescription = card.querySelector(".nft-description");
                     const nftID = nftDescription.querySelector(".tokenID");
                     nftID.textContent = tokenId;
+                    let owner;
+                    const tooltipTriggerList = [].slice.call(nftDescription.querySelectorAll('.btn-tooltip'));
+                    // console.log(tooltipTriggerList);
+                    tooltipTriggerList.map((tooltipTriggerEl) => new bootstrap.Tooltip(tooltipTriggerEl));
+                    await contract.methods.ownerOf(tokenId).call()
+                        .then((tokenIdOwner) => {
+                            owner = tokenIdOwner;
+                        })
+                        .catch((error) => {
+                            console.error('Error calling ownerOf function:', error);
+                        });
+                    const nftOwner = nftDescription.querySelector(".owner");
+                    nftOwner.textContent = (owner.substr(0, 5)).concat("...", owner.substr(-4, 4));
+
+                    // Set tooltip text dynamically
+                    const tooltipButton = nftDescription.querySelector('.btn-tooltip');
+                    tooltipButton.setAttribute('title', owner);
+
                     const cardNumber = nftDescription.querySelector(".card-number");
                     cardNumber.textContent = nft.description['Card Number'];
 
