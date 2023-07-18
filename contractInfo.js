@@ -1,6 +1,6 @@
 // contractInfo.js
 
-export const contractAddress = '0x02d1eD8Fa476385bD72B8f6284FE01301F9ff091';
+export const contractAddress = '0x5E04823bB28178c1126A3c300091a5aE03468245';
 
 export const contractABI = [
   {
@@ -310,6 +310,25 @@ export const contractABI = [
     "type": "function"
   },
   {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "tokenId",
+        "type": "uint256"
+      }
+    ],
+    "name": "getBidAmount",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
     "inputs": [],
     "name": "getContractOwner",
     "outputs": [
@@ -437,6 +456,37 @@ export const contractABI = [
   {
     "inputs": [],
     "name": "getTokensMetadata",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "uint256",
+            "name": "tokenId",
+            "type": "uint256"
+          },
+          {
+            "internalType": "string",
+            "name": "tokenURI",
+            "type": "string"
+          }
+        ],
+        "internalType": "struct NFTAuction.TokenMetadata[]",
+        "name": "",
+        "type": "tuple[]"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "user",
+        "type": "address"
+      }
+    ],
+    "name": "getWithdrawableTokens",
     "outputs": [
       {
         "components": [
@@ -754,4 +804,4 @@ export const contractABI = [
     "stateMutability": "nonpayable",
     "type": "function"
   }
-]
+];

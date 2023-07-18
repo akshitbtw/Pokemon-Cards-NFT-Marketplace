@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Start Auction</title>
+    
+</head>
+
+<body>
+    <div id="major">
+    <div id="navbar-placeholder"></div>
+    <template id="nft-card-template">
+        <div class="card bg-light p-3 mb-4 mt-3" style="width: 300px;">
+          <img class="nft-image img-fluid mx-auto d-block" src="" alt="" style="max-width: 200px;">
+          <div class="nft-details text-center">
+            <h2 class="nft-name"></h2>
+            <strong>NFT Token ID:</strong> <span class="tokenID"></span><br>
+            <strong>Total Bid Amount:</strong> <span class="bid-amount"></span>
+          </div>
+          <form class="form-inline justify-content-center">
+            <div class="additional-details text-center">
+              <button type="button" class="withdraw-button mt-3">Withdraw</button>
+            </div>
+          </form>
+        </div>
+      </template>
+      
+
+
+    <div id="nft-container" class="flex-container"
+        style="display: flex; flex-wrap: wrap; justify-content: center; gap: 16px; overflow-x: auto;">
+        <!-- NFT cards available to be auctioned will be added here dynamically -->
+    </div>
+    
+</div>
+</body>
+<script type="module" src="/connectToContract.js"></script>
+<script type="module" src="/withdraw.js"></script>
+<script type="module" src="navbar.js"></script>
+
+</html>

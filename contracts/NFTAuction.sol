@@ -142,6 +142,37 @@ contract NFTAuction is ERC721URIStorage, Ownable {
         payable(msg.sender).transfer(totalBid);
     }
 
+    function getWithdrawableTokens(address user) public view returns (TokenMetadata[] memory) {
+        uint256 tokenCount = _tokenIds.current();
+        TokenMetadata[] memory withdrawableTokens = new TokenMetadata[](tokenCount);
+
+        uint256 index = 0;
+        for (uint256 i = 0; i < _tokenIds.current(); i++) {
+            uint256 tokenId = i + 1;
+            if (_exists(tokenId)) {
+                Auction storage auction = auctions[tokenId];
+                if (auction.ended && user != auction.highestBidder && _totalBids[tokenId][user] > 0) {
+                    string memory tokenURI = tokenURI(tokenId);
+                    withdrawableTokens[index] = TokenMetadata(tokenId, tokenURI);
+                    index++;
+                }
+            }
+        }
+
+        // Resize the array to remove the empty slots
+        TokenMetadata[] memory result = new TokenMetadata[](index);
+        for (uint256 i = 0; i < index; i++) {
+            result[i] = withdrawableTokens[i];
+        }
+
+        return result;
+    }
+
+
+    function getBidAmount(uint256 tokenId) public view returns (uint256) {
+        return _totalBids[tokenId][msg.sender];
+    }
+
     function getLiveAuctions() public view returns (Auction[] memory) {
         Auction[] memory liveAuctionsData = new Auction[](liveAuctions.length);
         for (uint256 i = 0; i < liveAuctions.length; i++) {
