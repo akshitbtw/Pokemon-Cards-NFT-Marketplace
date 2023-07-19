@@ -97,10 +97,11 @@ document.addEventListener('DOMContentLoaded', async () => {
 
             nftEndTimeElement.textContent = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
 
-            if (remainingTimeInSeconds <= 0) {
+            if (remainingTimeInSeconds <= 0 && auction.tokenId == '3') {
                 clearInterval(interval);
                 bidInput.remove();
                 placeBidBtnDiv.remove();
+                nftEndTimeElement.textContent = "Auction Ended";
                 auctionStatusLabel.textContent = "This auction has ended, and the NFT will soon be transferred to the highest bidder. Participants can withdraw their bids once it is reflected in the withdrawal section.";
                 placeBidBtn.remove();
             }
@@ -112,7 +113,10 @@ document.addEventListener('DOMContentLoaded', async () => {
             nftCard.querySelector('.nft-highest-bidder').textContent = "No Bids Yet";
         else nftCard.querySelector('.nft-highest-bidder').textContent = auction.highestBidder;
 
-        nftCard.querySelector('.nft-highest-bid').textContent = `${web3js.utils.fromWei(auction.highestBid, 'ether')} ETH`;;
+        const highestBid = web3js.utils.fromWei(auction.highestBid, 'ether');
+        if(highestBid === "0")
+        nftCard.querySelector('.nft-highest-bid').textContent = `No Bids Placed`;
+        else nftCard.querySelector('.nft-highest-bid').textContent = `${highestBid} ETH`;
 
         const viewDetailsButton = nftCard.querySelector('.view-details-btn');
         const myModal = new bootstrap.Modal('#nft-details-modal');

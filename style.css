@@ -183,11 +183,6 @@ button:hover {
   object-fit: cover;
 }
 
-.nft-image-container {
-  width: 219px; /* Adjust the value to your desired size */
-  height: 20px; /* Adjust the value to your desired size */
-}
-
 .nft-card {
-  max-width: 740px;
+  max-width: 760px;
 }
