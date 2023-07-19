@@ -75,7 +75,6 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         const template = document.getElementById('nft-card-template');
         const nftCard = template.content.cloneNode(true);
-
         nftCard.querySelector('.nft-image').src = metadata.image;
         nftCard.querySelector('.nft-token-id').textContent = auction.tokenId;
         nftCard.querySelector('.nft-name').textContent = metadata.name;
@@ -86,7 +85,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         const endTime = new Date(auction.auctionEndTime * 1000);
         const auctionStatusLabel = nftCard.querySelector('.auction-status-label');
         const placeBidBtn = nftCard.querySelector('.place-bid-btn');
-
+        const placeBidBtnDiv = nftCard.querySelector('.button-column');
         function updateRemainingTime() {
             // console.log("time");
             const currentTime = new Date().getTime();
@@ -101,7 +100,8 @@ document.addEventListener('DOMContentLoaded', async () => {
             if (remainingTimeInSeconds <= 0) {
                 clearInterval(interval);
                 bidInput.remove();
-                auctionStatusLabel.textContent = "The auction has ended, and the NFT will soon be transferred to the highest bidder. Participants can withdraw their bids once it is reflected in the withdrawal section of the website.";
+                placeBidBtnDiv.remove();
+                auctionStatusLabel.textContent = "This auction has ended, and the NFT will soon be transferred to the highest bidder. Participants can withdraw their bids once it is reflected in the withdrawal section.";
                 placeBidBtn.remove();
             }
         }
@@ -182,6 +182,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         return nftCard;
     }
+
     function extractErrorCode(str){
         const delimiter = '___'; //Replace it with the delimiter you used in the Solidity Contract.
         const firstOccurence = str.indexOf(delimiter);

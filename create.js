@@ -61,7 +61,8 @@ document.addEventListener('DOMContentLoaded', async () => {
         const ipfsUrl2 = await uploadNFT(file2);
         document.getElementById("ipfsUrl").textContent = `IPFS URL: https://ipfs.io/ipfs/${ipfsUrl2}/blob`;
         await contract.methods.createToken("ipfs://" + ipfsUrl2 + "/blob").send({ from: account });
-
+        alert("NFT Created Successfully");
+        window.location.reload();
     }
     function match(){
         ethereum.request({ method: 'eth_requestAccounts' }).then(function(accounts) {
