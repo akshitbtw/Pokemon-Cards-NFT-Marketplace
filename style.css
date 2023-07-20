@@ -186,3 +186,19 @@ button:hover {
 .nft-card {
   max-width: 760px;
 }
+.tooltip-inner {
+  white-space: nowrap;
+  max-width: none;
+}
+.btn-tooltip{
+all: unset;
+padding:9px 9px;
+width: 6px;
+height: 6px;
+position: relative;
+top: -3px;
+background-image:url("circle-question-regular.png");
+background-size:cover;
+background-repeat:no-repeat;
+background-color: #2e2e2e;
+}
