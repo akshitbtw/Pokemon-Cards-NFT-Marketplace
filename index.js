@@ -97,7 +97,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
             nftEndTimeElement.textContent = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
 
-            if (remainingTimeInSeconds <= 0 && auction.tokenId == '3') {
+            if (remainingTimeInSeconds <= 0) {
                 clearInterval(interval);
                 bidInput.remove();
                 placeBidBtnDiv.remove();

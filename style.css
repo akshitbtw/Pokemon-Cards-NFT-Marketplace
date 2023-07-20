@@ -165,7 +165,7 @@ button:hover {
   transform: scale(1.05);
 }
 
-/* Styling for the image preview */
+/* Styling for the image preview in Create NFT Page Form*/
 #imagePreview {
   margin-top: 10px;
   display: flex;
@@ -185,6 +185,7 @@ button:hover {
 
 .nft-card {
   max-width: 760px;
+  box-shadow: 0 0 10px 4px rgba(0, 0, 0, 0.2);
 }
 
 .tooltip-inner {
