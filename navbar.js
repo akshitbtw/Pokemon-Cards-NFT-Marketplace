@@ -55,6 +55,7 @@ document.addEventListener('DOMContentLoaded', function() {
     })
     .catch(function(error) {
       console.log("Error loading navbar:", error);
+      alert("Error Loading Navigation Bar");
     });
 function match(){
 ethereum.request({ method: 'eth_requestAccounts' }).then(function(accounts) {
@@ -83,10 +84,12 @@ ethereum.request({ method: 'eth_requestAccounts' }).then(function(accounts) {
       })
       .catch(function(error) {
         console.error('Error calling view function:', error);
+        alert("Error calling view function");
       });
   })
   .catch(function(error) {
     console.error('Error connecting to contract:', error);
+    alert("Error Connecting to Contract");
   });
 }
 });

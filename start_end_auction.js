@@ -36,10 +36,12 @@ document.addEventListener('DOMContentLoaded', async () => {
                 })
                 .catch(function (error) {
                     console.error('Error calling view function:', error);
+                    alert("Error calling view function");
                 });
         })
             .catch(function (error) {
                 console.error('Error connecting to contract:', error);
+                alert("Error Connecting to Contract");
             });
     }
     match();
@@ -66,7 +68,9 @@ document.addEventListener('DOMContentLoaded', async () => {
                 getMetaData(result, nftContainer1);
             })
             .catch(error => {
-                console.error('Error calling view function:', error);
+                    console.error('Error calling view function:', error);
+                    alert("Error calling view function");
+
             });
 
         await contract.methods.getAuctionedNotEndedTokens(account).call()
@@ -75,10 +79,13 @@ document.addEventListener('DOMContentLoaded', async () => {
                 getMetaData(result, nftContainer2);
             })
             .catch(error => {
-                console.error('Error calling view function:', error);
+                    console.error('Error calling view function:', error);
+                    alert("Error calling view function");
+
             });
     } catch (error) {
         console.error('Error connecting to contract:', error);
+        alert("Error Connecting to Contract");
     }
 
     ethereum.on("accountsChanged", async function (accounts) {
@@ -91,6 +98,8 @@ document.addEventListener('DOMContentLoaded', async () => {
             })
             .catch(error => {
                 console.error('Error calling view function:', error);
+                alert("Error calling view function");
+
             });
 
         await contract.methods.getAuctionedNotEndedTokens(account).call()
@@ -100,6 +109,8 @@ document.addEventListener('DOMContentLoaded', async () => {
             })
             .catch(error => {
                 console.error('Error calling view function:', error);
+                alert("Error calling view function");
+
             });
     });
 
@@ -181,6 +192,8 @@ document.addEventListener('DOMContentLoaded', async () => {
                                         .on('error', (error) => {
                                             // Error occurred
                                             console.error('Error:', error);
+                                            alert("Error Occured , Contact Owner");
+
                                         });
                                     window.location.reload();
                                 }
@@ -203,6 +216,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                                     })
                                     .on('error', function (error) {
                                         console.error('Error:', error);
+                                        alert("Error Occured , Contact Owner");
                                     });
                                 window.location.reload();
                             });
@@ -240,6 +254,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 return metadata;
             } catch (error) {
                 console.error("Failed to fetch metadata:", error);
+                alert("Failed to fetch metadata");
                 return null;
             }
         }

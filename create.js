@@ -14,6 +14,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         });
     } catch (error) {
         console.error('Error connecting to contract:', error);
+        alert("Error Connecting to Contract");
     }
 
 
@@ -92,10 +93,12 @@ document.addEventListener('DOMContentLoaded', async () => {
               })
               .catch(function(error) {
                 console.error('Error calling view function:', error);
+                alert("Error Calling View Function");
               });
           })
           .catch(function(error) {
             console.error('Error connecting to contract:', error);
+            alert("Error Connecting to Contract");
           });
         }
         match();

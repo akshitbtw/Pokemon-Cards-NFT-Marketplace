@@ -1,8 +1,8 @@
 // contractInfo.js
 
-export const contractAddress = '0x5E04823bB28178c1126A3c300091a5aE03468245';
+export const contractAddress = '0x34A24EC835452C05e69972109d9754c01B3F4549';
 
-export const contractABI = [
+export const contractABI =[
   {
     "inputs": [],
     "stateMutability": "nonpayable",

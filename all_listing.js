@@ -13,9 +13,11 @@ document.addEventListener('DOMContentLoaded', async () => {
             })
             .catch(error => {
                 console.error('Error calling view function:', error);
+                alert("Error Calling view Function");
             });
     } catch (error) {
         console.error('Error connecting to contract:', error);
+        alert("Error Connecting to Contract");
     }
 
     ethereum.on("accountsChanged", function (accounts) {
@@ -27,6 +29,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             )
             .catch(error => {
                 console.error('Error calling view function:', error);
+                alert("Error Calling View Function");
             });
     });
     function getMetaData(response) {
@@ -59,13 +62,14 @@ document.addEventListener('DOMContentLoaded', async () => {
                         })
                         .catch((error) => {
                             console.error('Error calling ownerOf function:', error);
+                            alert("Error Calling ownerOf Function");
                         });
                     const nftOwner = nftDescription.querySelector(".owner");
                     nftOwner.textContent = (owner.substr(0, 5)).concat("...", owner.substr(-4, 4));
 
                     // Set tooltip text dynamically
                     const tooltipButton = nftDescription.querySelector('.btn-tooltip');
-                    tooltipButton.setAttribute('title', owner);
+                    tooltipButton.setAttribute('data-bs-original-title', owner);
 
                     const cardNumber = nftDescription.querySelector(".card-number");
                     cardNumber.textContent = nft.description['Card Number'];
@@ -128,6 +132,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 return metadata;
             } catch (error) {
                 console.error("Failed to fetch metadata:", error);
+                alert("Failed to Fetch metadata");
                 return null;
             }
         }

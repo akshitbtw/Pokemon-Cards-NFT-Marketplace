@@ -233,6 +233,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             return metadata;
         } catch (error) {
             console.error("Failed to fetch metadata:", error);
+            alert("Failed to fetch metadata");
             return null;
         }
     }
