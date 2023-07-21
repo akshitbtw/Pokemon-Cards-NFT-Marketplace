@@ -206,3 +206,15 @@ background-size:cover;
 background-repeat:no-repeat;
 /* background-color: #2e2e2e; */
 }
+.btn-tooltip:hover{
+  transition:none;
+  background-color:initial;
+
+}
+#noNftMsg {
+  font-size: 24px;
+  font-weight: bold;
+  color: #333;
+  padding-left: 42%;
+  padding-top: 20%;
+}

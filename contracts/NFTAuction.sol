@@ -55,6 +55,7 @@ contract NFTAuction is ERC721URIStorage, Ownable {
             auctions[tokenId].auctionEndTime == 0,
             "___Auction already started___"
         );
+        require(startingPrice  > 0,"___Can't Start Bid With Zero Price___");
 
         uint256 auctionEndTime = block.timestamp + _auctionDuration;
 
@@ -67,6 +68,7 @@ contract NFTAuction is ERC721URIStorage, Ownable {
             highestBid: 0,
             ended: false
         });
+         require(startingPrice  > 0,"___Can't Start Bid With Zero Price___");
         liveAuctions.push(tokenId);
     }
 

@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     let ownerAddress;
     let currentAddress;
-
+    var flag=1;
     // ethereum.on("accountsChanged", function (accounts) {
     //     // Refresh when account changes
     //     window.location.reload();
@@ -49,6 +49,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                     // console.log(auction, fetchMetadata(tokenURI));
                     fetchMetadata(tokenURI).then(metadata => {
                         // console.log(auction, metadata);
+                        flag=0;
                         const nftCard = createAuctionCard(auction, metadata);
                         addCardToContainer(nftCard);
                     })
@@ -236,6 +237,16 @@ document.addEventListener('DOMContentLoaded', async () => {
             alert("Failed to fetch metadata");
             return null;
         }
+    
+    }
+    
+    if(flag==1)
+    {
+        const msgDiv = document.createElement('div');
+        msgDiv.id = 'noNftMsg';
+        msgDiv.textContent = 'No Auction Available at the Moment';
+        msgDiv.style="padding-left:35%;";
+        document.body.appendChild(msgDiv);
     }
 
 });

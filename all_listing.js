@@ -3,6 +3,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const nftContainer = document.getElementById("nft-container");
     const nftCardTemplate = document.getElementById("nft-card-template");
     let contract;
+    var flag=1;
 
     try {
         contract = await contractPromise;
@@ -35,6 +36,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     function getMetaData(response) {
         response.forEach(item => {
             const tokenId = item[0];
+            flag=0;
             fetchMetadata(item[1]).then(async nft => {
                 if (nft) {
                     // console.log(metadata);
@@ -135,6 +137,14 @@ document.addEventListener('DOMContentLoaded', async () => {
                 alert("Failed to Fetch metadata");
                 return null;
             }
+        }
+        
+        if(flag==1)
+        {
+            const msgDiv = document.createElement('div');
+            msgDiv.id = 'noNftMsg';
+            msgDiv.textContent = 'No NFT Available';
+            document.body.appendChild(msgDiv);
         }
     }
 });

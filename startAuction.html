@@ -35,7 +35,7 @@
             <div class="additional-details d-inline-flex justify-content-center align-items-center">
                 <label for="listing-price" class="listing-price-label">Listing Price:</label>
                 <div class="col-sm-5">
-                    <input type="number" placeholder="ETH" id="listing-price" class="listing-price form-control">
+                    <input type="number" min="0" placeholder="ETH" id="listing-price" class="listing-price form-control">
                   </div>
                 <button type="button" class="auction-button ms-3">Start Auction</button>
             </div>
@@ -44,12 +44,12 @@
     </template>
 
 
-    <div class="separator fs-3">Start Auctions</div>
+    <div class="separator fs-3" id="startauction">Start Auctions</div>
     <div id="nft-container-1" class="flex-container"
         style="display: flex; flex-wrap: wrap; justify-content: center; gap: 16px; overflow-x: auto;">
         <!-- NFT cards available to be auctioned will be added here dynamically -->
     </div>
-    <div class="separator fs-3">End Auctions</div>
+    <div class="separator fs-3" id="endauction">End Auctions</div>
     <div id="nft-container-2" class="flex-container"
         style="display: flex; flex-wrap: wrap; justify-content: center; gap: 16px; overflow-x: auto;">
         <!-- NFT cards available to be auctioned will be added here dynamically -->

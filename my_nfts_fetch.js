@@ -3,6 +3,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const nftContainer = document.getElementById("nft-container");
     const nftCardTemplate = document.getElementById("nft-card-template");
     let contract;
+    var flag=1;
     try {
         contract = await contractPromise;
         let account;
@@ -40,8 +41,10 @@ document.addEventListener('DOMContentLoaded', async () => {
     function getMetaData(response) {
         response.forEach(item => {
             const tokenId = item[0];
+            flag=0;
             fetchMetadata(item[1]).then(nft => {
                 if (nft) {
+                    
                     // console.log(metadata);
                     // console.log(metadata.description);
                     const card = nftCardTemplate.content.cloneNode(true);
@@ -90,6 +93,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                     // Append the card to the container
                     nftContainer.appendChild(card);
                 }
+                
             });
         });
 
@@ -122,5 +126,12 @@ document.addEventListener('DOMContentLoaded', async () => {
                 return null;
             }
         }
+        if(flag==1)
+                {
+                    const msgDiv = document.createElement('div');
+                    msgDiv.id = 'noNftMsg';
+                    msgDiv.textContent = 'You Don\'t Own any NFT';
+                    document.body.appendChild(msgDiv);
+                }
     }
 });
