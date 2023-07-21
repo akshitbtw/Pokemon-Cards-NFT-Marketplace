@@ -106,7 +106,4 @@ document.addEventListener('DOMContentLoaded', async () => {
             // Update button text when account changes
             window.location.reload();
         });
-
-
-    
 });

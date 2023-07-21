@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const nftContainer2 = document.getElementById("nft-container-2");
     const nftCardTemplate = document.getElementById("nft-card-template");
     let contract; let account;
-    var flag=1;
+    var flag = 1;
 
 
     let ownerAddress;
@@ -68,8 +68,8 @@ document.addEventListener('DOMContentLoaded', async () => {
                 getMetaData(result, nftContainer1);
             })
             .catch(error => {
-                    console.error('Error calling view function:', error);
-                    alert("Error calling view function");
+                console.error('Error calling view function:', error);
+                alert("Error calling view function");
 
             });
 
@@ -79,8 +79,8 @@ document.addEventListener('DOMContentLoaded', async () => {
                 getMetaData(result, nftContainer2);
             })
             .catch(error => {
-                    console.error('Error calling view function:', error);
-                    alert("Error calling view function");
+                console.error('Error calling view function:', error);
+                alert("Error calling view function");
 
             });
     } catch (error) {
@@ -118,7 +118,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         response.forEach(item => {
             if (item[0] !== '' && item[1] !== '') {
                 const tokenId = item[0];
-                flag=0;
+                flag = 0;
                 // console.log("item[0] --> " + item[0] + " item[1] --> " + item[1]);
                 fetchMetadata(item[1]).then(nft => {
                     if (nft) {
@@ -174,10 +174,11 @@ document.addEventListener('DOMContentLoaded', async () => {
                             auctionBtn.addEventListener('click', async () => {
                                 if (listingPrice.value === "") {
                                     // Input is empty, display an error message or take appropriate action
-                                    alert("Listing price cannot be empty.");}
-                                else if(listingPrice.value <= 0){
+                                    alert("Listing price cannot be empty.");
+                                }
+                                else if (listingPrice.value <= 0) {
                                     alert("Listing price should be more than 0.");
-                                
+
                                 } else {
                                     // Input is not empty, proceed with further processing
                                     console.log("Listing price:", listingPrice.value);
@@ -205,9 +206,10 @@ document.addEventListener('DOMContentLoaded', async () => {
                         }
                         else if (nftContainer === nftContainer2) {
                             const listingPriceLabel = additionalDetails.querySelector(".listing-price-label");
+                            additionalDetails.querySelector(".column1").remove();
                             listingPriceLabel.remove();
-                            listingPrice.remove();
                             auctionBtn.textContent = 'End Auction';
+                            auctionBtn.classList.remove('ms-2');
                             auctionBtn.addEventListener('click', async () => {
                                 await contract.methods.endAuction(nftID.textContent)
                                     .send({ from: account })
@@ -263,17 +265,17 @@ document.addEventListener('DOMContentLoaded', async () => {
                 return null;
             }
         }
-        
+
     }
-    if(flag==1){
+    if (flag == 1) {
         const separator1 = document.getElementById('startauction');
         const separator2 = document.getElementById('endauction');
-          separator2.remove();separator1.remove();
-          const msgDiv = document.createElement('div');
-          msgDiv.id = 'noNftMsg';
-          msgDiv.textContent = 'No NFT Available to Start or End Auction';
-          msgDiv.style="padding-left:35%;";
-          document.body.appendChild(msgDiv);
+        separator2.remove(); separator1.remove();
+        const msgDiv = document.createElement('div');
+        msgDiv.id = 'noNftMsg';
+        msgDiv.textContent = 'No NFT Available to Start or End Auction';
+        msgDiv.style = "padding-left:35%;";
+        document.body.appendChild(msgDiv);
     }
-    
+
 });

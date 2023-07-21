@@ -1,20 +1,7 @@
 import { contractPromise } from './connectToContract.js';
 import { web3js } from './connectToContract.js';
 document.addEventListener('DOMContentLoaded', async () => {
-    const nftContainer = document.getElementById("nft-container");
-    const nftCardTemplate = document.getElementById("nft-card-template");
     let contract; let account;
-
-
-
-    let ownerAddress;
-    let currentAddress;
-    var flag=1;
-    // ethereum.on("accountsChanged", function (accounts) {
-    //     // Refresh when account changes
-    //     window.location.reload();
-    // });
-
     try {
         contract = await contractPromise;
         account;
@@ -22,19 +9,10 @@ document.addEventListener('DOMContentLoaded', async () => {
             account = accounts[0];
             console.log(account);
         });
-        // await contract.methods.getLiveAuctions().call()
-        //     .then(result => {
-        //         // console.log('getLiveAuctions', result[0]);
-        //         createAuctionCards(result);
-        //     })
-        //     .catch(error => {
-        //         console.error('Error calling view function:', error);
-        //     });
-
 
         contract.methods.getLiveAuctions().call()
             .then(liveAuctions => {
-                // console.log('Live Auctions:', liveAuctions);
+                if(liveAuctions.length===0) noAuctionsAvailable();
                 return Promise.all(liveAuctions.map(auction => {
                     return Promise.all([
                         Promise.resolve(auction),
@@ -43,19 +21,16 @@ document.addEventListener('DOMContentLoaded', async () => {
                 }));
             })
             .then(auctionedNFTs => {
-                // console.log('Auctioned NFTs:', auctionedNFTs);
                 auctionedNFTs.forEach(([auction, tokenURI]) => {
                     // Render the NFT card using auction and tokenURI data
                     // console.log(auction, fetchMetadata(tokenURI));
                     fetchMetadata(tokenURI).then(metadata => {
-                        // console.log(auction, metadata);
-                        flag=0;
                         const nftCard = createAuctionCard(auction, metadata);
                         addCardToContainer(nftCard);
                     })
-                        .catch(error => {
-                            console.error('Error fetching NFT metadata:', error);
-                        });
+                    .catch(error => {
+                        console.error('Error fetching NFT metadata:', error);
+                    });
                 });
             })
             .catch(error => {
@@ -115,8 +90,8 @@ document.addEventListener('DOMContentLoaded', async () => {
         else nftCard.querySelector('.nft-highest-bidder').textContent = auction.highestBidder;
 
         const highestBid = web3js.utils.fromWei(auction.highestBid, 'ether');
-        if(highestBid === "0")
-        nftCard.querySelector('.nft-highest-bid').textContent = `No Bids Placed`;
+        if (highestBid === "0")
+            nftCard.querySelector('.nft-highest-bid').textContent = `No Bids Placed`;
         else nftCard.querySelector('.nft-highest-bid').textContent = `${highestBid} ETH`;
 
         const viewDetailsButton = nftCard.querySelector('.view-details-btn');
@@ -176,7 +151,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                                 alert('Transaction reverted without reason.');
                             }
                         });
-                        window.location.reload();
+                    window.location.reload();
 
                 })
                 .catch((error) => {
@@ -188,18 +163,18 @@ document.addEventListener('DOMContentLoaded', async () => {
         return nftCard;
     }
 
-    function extractErrorCode(str){
+    function extractErrorCode(str) {
         const delimiter = '___'; //Replace it with the delimiter you used in the Solidity Contract.
         const firstOccurence = str.indexOf(delimiter);
-        if(firstOccurence == -1) {
+        if (firstOccurence == -1) {
             return "An error occured";
         }
-    
+
         const secondOccurence = str.indexOf(delimiter, firstOccurence + 1);
-        if(secondOccurence == -1) {
+        if (secondOccurence == -1) {
             return "An error occured";
         }
-    
+
         //Okay so far
         return str.substring(firstOccurence + delimiter.length, secondOccurence);
     }
@@ -237,16 +212,14 @@ document.addEventListener('DOMContentLoaded', async () => {
             alert("Failed to fetch metadata");
             return null;
         }
-    
+
     }
-    
-    if(flag==1)
-    {
+
+    function noAuctionsAvailable(){
         const msgDiv = document.createElement('div');
         msgDiv.id = 'noNftMsg';
         msgDiv.textContent = 'No Auction Available at the Moment';
-        msgDiv.style="padding-left:35%;";
+        msgDiv.style.justifyContent = "center";
         document.body.appendChild(msgDiv);
     }
-
 });

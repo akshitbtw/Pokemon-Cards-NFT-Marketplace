@@ -7,19 +7,16 @@
 
 /* Navigation links */
 .navbar a {
-  float: left;
   font-size: 16px;
   color: white;
   text-align: center;
   padding: 14px 16px;
   text-decoration: none;
-  width:140px;
-  /* padding-left: 20px; */
+  width: 140px;
 }
 
 /* The subnavigation menu */
 .subnav {
-  float: left;
   overflow: hidden;
 }
 
@@ -33,7 +30,7 @@
   background-color: inherit;
   font-family: inherit;
   margin: 0;
-  width:135px;
+  width: 135px;
 }
 
 /* Add a red background color to navigation links on hover */
@@ -43,26 +40,22 @@
   color: white;
 }
 
-/* Style the subnav content - positioned absolute */
+/* Style the subnav content - positioned fixed */
 .subnav-content {
   display: none;
-  position:fixed;
+  position: fixed;
   left: auto;
   background-color: rgb(56, 56, 56);
-  width:auto;
-  z-index: 1;
-  margin-right: 0;
+  width: auto;
+  z-index: 2; /* Increased z-index value */
 }
 
 /* Style the subnav links */
 .subnav-content a {
-  float: left;
   color: white;
-  padding-left: 1%;
-  padding-right: 1%;
+  padding: 10px 16px; /* Adjust the padding as needed for your desired height */
   text-decoration: none;
-  width: 100%;
-
+  display: block; /* Ensure each link takes up the full width of the container */
 }
 
 /* Add a grey background color on hover */
@@ -96,13 +89,15 @@
 .separator:not(:empty)::after {
   margin-left: .25em;
 }
+
 /* CSS styles for NFT Upload form */
 
 /* Basic styling for the form */
 #uploadForm {
   display: flex;
   flex-direction: column;
-  max-width: 600px; /* Adjust the max-width as desired */
+  max-width: 600px;
+  /* Adjust the max-width as desired */
   margin: 0 auto;
   padding: 20px;
   background-color: #f8f8f8;
@@ -113,19 +108,20 @@
 /* Styling for the input fields */
 input[type="file"],
 input[type="text"],
-input[type="number"]
- {
+input[type="number"] {
   margin-bottom: 10px;
   padding: 10px;
   border: 1px solid #ddd;
   border-radius: 4px;
-  width: 100%; /* Set the width to 100% */
+  width: 100%;
+  /* Set the width to 100% */
 }
 
 /* Styling for the button */
 button {
   padding: 10px 20px;
-  background-color: #2e2e2e; /* Grayish color */
+  background-color: #2e2e2e;
+  /* Grayish color */
   color: #ffffff;
   border: none;
   border-radius: 4px;
@@ -133,9 +129,15 @@ button {
   transition: background-color 0.3s ease;
 }
 
+#connect-button {
+  background-color: white;
+  color: black;
+}
+
 button:hover {
-  background-color: #000000; /* Darker gray on hover */
-  color:white;
+  background-color: #000000;
+  /* Darker gray on hover */
+  color: white;
 }
 
 /* Styling for the IPFS URL display */
@@ -193,24 +195,25 @@ button:hover {
   max-width: none;
 }
 
-.btn-tooltip{
-all: unset;
-padding:9px 9px;
-width: 7.5px;
-height: 7px;
-position: relative;
-top: -3px;
-border-radius: 25px;
-background-image:url("information.png");
-background-size:cover;
-background-repeat:no-repeat;
-/* background-color: #2e2e2e; */
+.btn-tooltip {
+  all: unset;
+  padding: 9px 9px;
+  width: 7.5px;
+  height: 7px;
+  position: relative;
+  top: -3px;
+  border-radius: 25px;
+  background-image: url("information.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  /* background-color: #2e2e2e; */
 }
-.btn-tooltip:hover{
-  transition:none;
-  background-color:initial;
 
+.btn-tooltip:hover {
+  transition: none;
+  background-color: initial;
 }
+
 #noNftMsg {
   font-size: 24px;
   font-weight: bold;
