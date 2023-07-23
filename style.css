@@ -45,7 +45,7 @@
   display: none;
   position: fixed;
   left: auto;
-  background-color: rgb(56, 56, 56);
+  background-color: #383838;
   width: auto;
   z-index: 2; /* Increased z-index value */
 }
@@ -187,7 +187,7 @@ button:hover {
 
 .nft-card {
   max-width: 760px;
-  box-shadow: 0 0 10px 4px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 0 6px 2px #383838;
 }
 
 .tooltip-inner {
@@ -206,12 +206,13 @@ button:hover {
   background-image: url("information.png");
   background-size: cover;
   background-repeat: no-repeat;
-  /* background-color: #2e2e2e; */
 }
 
 .btn-tooltip:hover {
   transition: none;
   background-color: initial;
+  box-shadow: none;
+  transform: none;
 }
 
 #noNftMsg {

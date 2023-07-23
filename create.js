@@ -6,17 +6,14 @@ document.addEventListener('DOMContentLoaded', async () => {
     let currentAddress;
     try {
         contract = await contractPromise;
-        // let account;
-        const accounts = await ethereum.request({ method: 'eth_requestAccounts' }).then(accounts => {
+        await ethereum.request({ method: 'eth_requestAccounts' }).then(accounts => {
             account = accounts[0];
             console.log(account);
-
         });
     } catch (error) {
         console.error('Error connecting to contract:', error);
         alert("Error Connecting to Contract");
     }
-
 
     async function uploadNFT(NFTFile) {
         const formData = new FormData();
@@ -33,10 +30,9 @@ document.addEventListener('DOMContentLoaded', async () => {
         const data = await response.json();
         return data.value.cid;
     }
+
     async function handleFormSubmit(event) {
-
         event.preventDefault();
-
         const imageFile = document.getElementById("imageUpload").files[0];
         const fullPath = document.getElementById("imageUpload").files[0].name;
         var index = fullPath.lastIndexOf("/");
@@ -65,6 +61,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         alert("NFT Created Successfully");
         window.location.reload();
     }
+
     function match(){
         ethereum.request({ method: 'eth_requestAccounts' }).then(function(accounts) {
                 account = accounts[0];
@@ -102,8 +99,7 @@ document.addEventListener('DOMContentLoaded', async () => {
           });
         }
         match();
-        ethereum.on("accountsChanged", function (accounts) {
-            // Update button text when account changes
+        ethereum.on("accountsChanged", function () {
             window.location.reload();
         });
 });

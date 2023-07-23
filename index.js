@@ -5,14 +5,14 @@ document.addEventListener('DOMContentLoaded', async () => {
     try {
         contract = await contractPromise;
         account;
-        const accounts = await ethereum.request({ method: 'eth_requestAccounts' }).then(accounts => {
+        await ethereum.request({ method: 'eth_requestAccounts' }).then(accounts => {
             account = accounts[0];
             console.log(account);
         });
 
         contract.methods.getLiveAuctions().call()
             .then(liveAuctions => {
-                if(liveAuctions.length===0) noAuctionsAvailable();
+                if (liveAuctions.length === 0) noAuctionsAvailable();
                 return Promise.all(liveAuctions.map(auction => {
                     return Promise.all([
                         Promise.resolve(auction),
@@ -24,13 +24,13 @@ document.addEventListener('DOMContentLoaded', async () => {
                 auctionedNFTs.forEach(([auction, tokenURI]) => {
                     // Render the NFT card using auction and tokenURI data
                     // console.log(auction, fetchMetadata(tokenURI));
-                    fetchMetadata(tokenURI).then(metadata => {
-                        const nftCard = createAuctionCard(auction, metadata);
+                    fetchMetadata(tokenURI).then(async metadata => {
+                        const nftCard = await createAuctionCard(auction, metadata);
                         addCardToContainer(nftCard);
                     })
-                    .catch(error => {
-                        console.error('Error fetching NFT metadata:', error);
-                    });
+                        .catch(error => {
+                            console.error('Error fetching NFT metadata:', error);
+                        });
                 });
             })
             .catch(error => {
@@ -41,13 +41,11 @@ document.addEventListener('DOMContentLoaded', async () => {
         console.error('Error connecting to contract:', error);
     }
 
-    ethereum.on("accountsChanged", async function (accounts) {
-        // Update button text when account changes
-        account = accounts[0];
-
+    ethereum.on("accountsChanged", function () {
+        window.location.reload();
     });
 
-    function createAuctionCard(auction, metadata) {
+    async function createAuctionCard(auction, metadata) {
 
         const template = document.getElementById('nft-card-template');
         const nftCard = template.content.cloneNode(true);
@@ -62,8 +60,8 @@ document.addEventListener('DOMContentLoaded', async () => {
         const auctionStatusLabel = nftCard.querySelector('.auction-status-label');
         const placeBidBtn = nftCard.querySelector('.place-bid-btn');
         const placeBidBtnDiv = nftCard.querySelector('.button-column');
+        const nftHighestBid = nftCard.querySelector('.nft-highest-bid');
         function updateRemainingTime() {
-            // console.log("time");
             const currentTime = new Date().getTime();
             const remainingTimeInSeconds = Math.max(0, endTime - currentTime) / 1000;
 
@@ -77,6 +75,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 clearInterval(interval);
                 bidInput.remove();
                 placeBidBtnDiv.remove();
+                nftHighestBid.textContent = `${web3js.utils.fromWei(auction.highestBid, 'ether')} ETH`;
                 nftEndTimeElement.textContent = "Auction Ended";
                 auctionStatusLabel.textContent = "This auction has ended, and the NFT will soon be transferred to the highest bidder. Participants can withdraw their bids once it is reflected in the withdrawal section.";
                 placeBidBtn.remove();
@@ -89,10 +88,24 @@ document.addEventListener('DOMContentLoaded', async () => {
             nftCard.querySelector('.nft-highest-bidder').textContent = "No Bids Yet";
         else nftCard.querySelector('.nft-highest-bidder').textContent = auction.highestBidder;
 
-        const highestBid = web3js.utils.fromWei(auction.highestBid, 'ether');
-        if (highestBid === "0")
-            nftCard.querySelector('.nft-highest-bid').textContent = `No Bids Placed`;
-        else nftCard.querySelector('.nft-highest-bid').textContent = `${highestBid} ETH`;
+        const userBidAmount = await contract.methods.getBidAmount(auction.tokenId).call({ from: account });
+        nftCard.querySelector('.user-bid-amount').textContent = `${web3js.utils.fromWei(userBidAmount, 'ether')} ETH`;
+
+        const userBidInWei = web3js.utils.toBN(userBidAmount);
+        const highestBidInWeiBN = web3js.utils.toBN(auction.highestBid);
+        const amountToOutbidInWei = highestBidInWeiBN.sub(userBidInWei).add(web3js.utils.toBN(1));
+        const amountToOutbidInEth = web3js.utils.fromWei(amountToOutbidInWei, 'ether');
+
+        if (auction.highestBidder === '0x0000000000000000000000000000000000000000') {
+            nftCard.querySelector('.nft-highest-bid').textContent = "No Bids Placed";
+        } else {
+            const highestBidInEth = web3js.utils.fromWei(auction.highestBid, 'ether');
+            if (amountToOutbidInEth) {
+                nftHighestBid.textContent = `${highestBidInEth} ETH (+${amountToOutbidInEth} ETH to outbid)`;
+            } else {
+                nftHighestBid.textContent = `${highestBidInEth} ETH`;
+            }
+        }
 
         const viewDetailsButton = nftCard.querySelector('.view-details-btn');
         const myModal = new bootstrap.Modal('#nft-details-modal');
@@ -140,7 +153,6 @@ document.addEventListener('DOMContentLoaded', async () => {
                         .on('confirmation', (confirmationNumber, receipt) => {
                             console.log('Confirmation number:', confirmationNumber);
                             console.log('Receipt:', receipt);
-                            // Handle confirmation and receipt as needed
                         })
                         .on('error', (error) => {
                             console.error('Error:', error);
@@ -215,7 +227,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     }
 
-    function noAuctionsAvailable(){
+    function noAuctionsAvailable() {
         const msgDiv = document.createElement('div');
         msgDiv.id = 'noNftMsg';
         msgDiv.textContent = 'No Auction Available at the Moment';
