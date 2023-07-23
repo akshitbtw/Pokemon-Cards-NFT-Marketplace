@@ -73,8 +73,8 @@ document.addEventListener('DOMContentLoaded', function () {
         contract.methods.getContractOwner().call()
           .then(function (result) {
             ownerAddress = result;
-            console.log("Owner Address: ", ownerAddress);
-            console.log("Current Address : ", currentAddress);
+            // console.log("Owner Address: ", ownerAddress);
+            // console.log("Current Address : ", currentAddress);
 
             const admin = document.getElementById("admin");
 

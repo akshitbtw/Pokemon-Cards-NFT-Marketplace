@@ -12,7 +12,7 @@ async function connectToContract() {
   contract = new web3js.eth.Contract(contractABI, contractAddress);
 
   console.log('Contract instance created successfully');
-  console.log('Contract address:', contract.options.address);
+  // console.log('Contract address:', contract.options.address);
 
   // Return the contract instance
   return contract;

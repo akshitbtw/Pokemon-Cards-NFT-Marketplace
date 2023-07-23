@@ -208,7 +208,7 @@ button:hover {
   background-repeat: no-repeat;
 }
 
-.btn-tooltip:hover {
+.btn-tooltip:hover, .btn-close:hover {
   transition: none;
   background-color: initial;
   box-shadow: none;

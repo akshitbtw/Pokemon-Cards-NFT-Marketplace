@@ -3,13 +3,13 @@ document.addEventListener('DOMContentLoaded', async () => {
     const nftContainer = document.getElementById("nft-container");
     const nftCardTemplate = document.getElementById("nft-card-template");
     let contract;
-    var flag=1;
+    var flag = 1;
     try {
         contract = await contractPromise;
         let account;
         const accounts = await ethereum.request({ method: 'eth_requestAccounts' }).then(accounts => {
             account = accounts[0];
-            console.log(account);
+            // console.log(account);
         });
         // const result = await contract.methods.createToken('ipfs://bafkreiguilveopoz73amweqrsqdtacnake4z3ji5jlmtohgdiiypvf6zry').send({ from: account });
         contract.methods.getOwnedTokensMetadata(account).call()
@@ -30,9 +30,9 @@ document.addEventListener('DOMContentLoaded', async () => {
         // Update button text when account changes
         let account = accounts[0];
         contract.methods.getOwnedTokensMetadata(account).call()
-            .then(result => {
-                window.location.reload();
-            })
+            .then(
+                window.location.reload()
+            )
             .catch(error => {
                 console.error('Error calling view function:', error);
                 alert("Error Calling View Function");
@@ -41,10 +41,10 @@ document.addEventListener('DOMContentLoaded', async () => {
     function getMetaData(response) {
         response.forEach(item => {
             const tokenId = item[0];
-            flag=0;
+            flag = 0;
             fetchMetadata(item[1]).then(nft => {
                 if (nft) {
-                    
+
                     // console.log(metadata);
                     // console.log(metadata.description);
                     const card = nftCardTemplate.content.cloneNode(true);
@@ -90,7 +90,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                     // Append the card to the container
                     nftContainer.appendChild(card);
                 }
-                
+
             });
         });
 
@@ -123,12 +123,11 @@ document.addEventListener('DOMContentLoaded', async () => {
                 return null;
             }
         }
-        if(flag==1)
-                {
-                    const msgDiv = document.createElement('div');
-                    msgDiv.id = 'noNftMsg';
-                    msgDiv.textContent = 'You Don\'t Own any NFT';
-                    document.body.appendChild(msgDiv);
-                }
+        if (flag == 1) {
+            const msgDiv = document.createElement('div');
+            msgDiv.id = 'noNftMsg';
+            msgDiv.textContent = 'You Don\'t Own any NFT';
+            document.body.appendChild(msgDiv);
+        }
     }
 });

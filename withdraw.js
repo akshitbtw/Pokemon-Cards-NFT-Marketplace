@@ -7,10 +7,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     var flag=1;
     try {
         contract = await contractPromise;
-        account;
-        const accounts = await ethereum.request({ method: 'eth_requestAccounts' }).then(accounts => {
+        await ethereum.request({ method: 'eth_requestAccounts' }).then(accounts => {
             account = accounts[0];
-            // console.log(account);
         });
         await contract.methods.getWithdrawableTokens(account).call()
             .then(result => {
@@ -20,15 +18,6 @@ document.addEventListener('DOMContentLoaded', async () => {
             .catch(error => {
                 console.error('Error calling view function:', error);
             });
-
-        // await contract.methods.getAuctionedNotEndedTokens(account).call()
-        //     .then(result => {
-        //         // console.log('getAuctionedNotEndedTokens ' + result);
-        //         getMetaData(result, nftContainer2);
-        //     })
-        //     .catch(error => {
-        //         console.error('Error calling view function:', error);
-        //     });
     } catch (error) {
         console.error('Error connecting to contract:', error);
     }
@@ -44,19 +33,9 @@ document.addEventListener('DOMContentLoaded', async () => {
             .catch(error => {
                 console.error('Error calling view function:', error);
             });
-
-        // await contract.methods.getAuctionedNotEndedTokens(account).call()
-        //     .then(result => {
-        //         // console.log('getAuctionedNotEndedTokens ' + result);
-        //         getMetaData(result, nftContainer2);
-        //     })
-        //     .catch(error => {
-        //         console.error('Error calling view function:', error);
-        //     });
     });
 
     function getMetaData(response) {
-        console.log("withdrawble tokens : ", response);
         response.forEach(item => {
             if (item[0] !== '' && item[1] !== '') {
                 const tokenId = item[0];
@@ -100,7 +79,6 @@ document.addEventListener('DOMContentLoaded', async () => {
                             alert('Withdrawal Successful');
                             window.location.reload();
                         });
-                        // 91.4747
                         // Append the card to the container
                         nftContainer.appendChild(card);
                     }

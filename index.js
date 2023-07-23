@@ -7,7 +7,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         account;
         await ethereum.request({ method: 'eth_requestAccounts' }).then(accounts => {
             account = accounts[0];
-            console.log(account);
         });
 
         contract.methods.getLiveAuctions().call()
@@ -23,7 +22,6 @@ document.addEventListener('DOMContentLoaded', async () => {
             .then(auctionedNFTs => {
                 auctionedNFTs.forEach(([auction, tokenURI]) => {
                     // Render the NFT card using auction and tokenURI data
-                    // console.log(auction, fetchMetadata(tokenURI));
                     fetchMetadata(tokenURI).then(async metadata => {
                         const nftCard = await createAuctionCard(auction, metadata);
                         addCardToContainer(nftCard);
@@ -100,8 +98,9 @@ document.addEventListener('DOMContentLoaded', async () => {
             nftCard.querySelector('.nft-highest-bid').textContent = "No Bids Placed";
         } else {
             const highestBidInEth = web3js.utils.fromWei(auction.highestBid, 'ether');
-            if (amountToOutbidInEth) {
-                nftHighestBid.textContent = `${highestBidInEth} ETH (+${amountToOutbidInEth} ETH to outbid)`;
+            if (amountToOutbidInEth && account!==(auction.highestBidder.toLowerCase())) {
+                console.log(account, auction.highestBidder);
+                nftHighestBid.innerHTML = `${highestBidInEth} ETH<br>(+${amountToOutbidInEth} ETH to outbid)`;
             } else {
                 nftHighestBid.textContent = `${highestBidInEth} ETH`;
             }

@@ -134,35 +134,32 @@ document.addEventListener('DOMContentLoaded', async () => {
                         const nftName = card.querySelector(".nft-name");
                         nftName.textContent = nft.name;
 
-                        const nftDescription = card.querySelector(".nft-description");
-                        const nftID = nftDescription.querySelector(".tokenID");
-                        nftID.textContent = tokenId;
-                        const cardNumber = nftDescription.querySelector(".card-number");
-                        cardNumber.textContent = nft.description['Card Number'];
+                        const viewDetailsButton = card.querySelector('.view-details-btn');
+                        const myModal = new bootstrap.Modal('#nft-details-modal');
+                        viewDetailsButton.addEventListener('click', () => {
+                            const modalBody = document.querySelector(".modal-body");
+                            const nftDetails = modalBody.querySelector(".nft-details");
+                            nftDetails.querySelector('.nft-name').textContent = nft.name;
+                            const nftDescription = nftDetails.querySelector(".nft-description");
+                            nftDescription.querySelector(".tokenID").textContent = tokenId;
 
-                        const rarity = nftDescription.querySelector(".rarity");
-                        rarity.textContent = nft.description.Rarity;
+                            nftDescription.querySelector(".card-number").textContent = nft.description['Card Number'];
+                            nftDescription.querySelector(".rarity").textContent = nft.description.Rarity;
+                            nftDescription.querySelector(".card-type").textContent = nft.description['Card Type'];
+                            nftDescription.querySelector(".hp").textContent = nft.description.HP;
+                            nftDescription.querySelector(".stage").textContent = nft.description.Stage;
+                            nftDescription.querySelector(".attack-1").textContent = nft.description['Attack 1'];
+                            nftDescription.querySelector(".attack-2").textContent = nft.description['Attack 2'];
+                            nftDescription.querySelector(".weakness").textContent = nft.description.Weakness;
+                            nftDescription.querySelector(".retreat-cost").textContent = nft.description['Retreat Cost'];
 
-                        const cardType = nftDescription.querySelector(".card-type");
-                        cardType.textContent = nft.description['Card Type'];
+                            myModal.show();
 
-                        const hp = nftDescription.querySelector(".hp");
-                        hp.textContent = nft.description.HP;
-
-                        const stage = nftDescription.querySelector(".stage");
-                        stage.textContent = nft.description.Stage;
-
-                        const attack1 = nftDescription.querySelector(".attack-1");
-                        attack1.textContent = nft.description['Attack 1'];
-
-                        const attack2 = nftDescription.querySelector(".attack-2");
-                        attack2.textContent = nft.description['Attack 2'];
-
-                        const weakness = nftDescription.querySelector(".weakness");
-                        weakness.textContent = nft.description.Weakness;
-
-                        const retreatCost = nftDescription.querySelector(".retreat-cost");
-                        retreatCost.textContent = nft.description['Retreat Cost'];
+                            // event listener for modal close button
+                            document.querySelector('.btn-close').addEventListener('click', () => {
+                                myModal.hide();
+                            });
+                        });
 
                         const additionalDetails = card.querySelector(".additional-details");
                         const auctionBtn = additionalDetails.querySelector(".auction-button");
@@ -181,7 +178,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                                     console.log("Listing price:", listingPrice.value);
                                     const weiValue = web3js.utils.toWei(listingPrice.value.toString(), 'ether');
                                     console.log(weiValue);
-                                    await contract.methods.startAuction(nftID.textContent, weiValue)
+                                    await contract.methods.startAuction(tokenId, weiValue)
                                         .send({ from: account })
                                         .on('transactionHash', (hash) => {
                                             // Transaction submitted
@@ -208,7 +205,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                             auctionBtn.textContent = 'End Auction';
                             auctionBtn.classList.remove('ms-2');
                             auctionBtn.addEventListener('click', async () => {
-                                await contract.methods.endAuction(nftID.textContent)
+                                await contract.methods.endAuction(tokenId)
                                     .send({ from: account })
                                     .on('transactionHash', function (hash) {
                                         console.log('Transaction hash:', hash);
