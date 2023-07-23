@@ -121,7 +121,6 @@ document.addEventListener('DOMContentLoaded', async () => {
             nftDescription.querySelector(".card-type").textContent = metadata.description['Card Type'];
             nftDescription.querySelector(".hp").textContent = metadata.description.HP;
             nftDescription.querySelector(".stage").textContent = metadata.description.Stage;
-            nftDescription.querySelector(".card-text").textContent = metadata.description['Card Text'];
             nftDescription.querySelector(".attack-1").textContent = metadata.description['Attack 1'];
             nftDescription.querySelector(".attack-2").textContent = metadata.description['Attack 2'];
             nftDescription.querySelector(".weakness").textContent = metadata.description.Weakness;

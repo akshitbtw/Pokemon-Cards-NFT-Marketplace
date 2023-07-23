@@ -152,9 +152,6 @@ document.addEventListener('DOMContentLoaded', async () => {
                         const stage = nftDescription.querySelector(".stage");
                         stage.textContent = nft.description.Stage;
 
-                        const cardText = nftDescription.querySelector(".card-text");
-                        cardText.textContent = nft.description['Card Text'];
-
                         const attack1 = nftDescription.querySelector(".attack-1");
                         attack1.textContent = nft.description['Attack 1'];
 
