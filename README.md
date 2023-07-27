@@ -33,7 +33,7 @@ Before running the POKEMON CARDS NFT MARKETPLACE, you need to have the following
 
 - Node.js
 - Ganache
-- MetaMask or any other Ethereum wallet extension in your browser.
+- MetaMask Ethereum wallet extension in your browser.
 
 ## Getting Started
 
@@ -108,7 +108,7 @@ npm run dev
 
    ![Withdrawing Bids](screenshots/withdraw_bid.png)
 
-## All Listings Webpage:
+### All Listings Webpage:
 
-- To view all the Pokémon card NFTs available on the website, visit the "All Listings" webpage.
-- Each NFT card, along with its attributes, image, and the owner's wallet address, will be displayed on this page.
+1. To view all the Pokémon card NFTs available on the website, visit the "All Listings" webpage.
+2. Each NFT card, along with its attributes, image, and the owner's wallet address, will be displayed on this page.
