@@ -68,7 +68,7 @@ npm run dev
 ### Admin (NFT Creator):
 
 1. Minting NFTs:
-   - As an admin, you can mint new NFTs by navigating to the "Create" section under the admin panel.
+   - As an admin, you can mint new NFTs by navigating to the "Create NFT" section under the admin panel.
    - Fill in the required details in the form shown there, such as card attributes, image.
    - Click the "Create NFT" button to create a new Pokémon card NFT.
 

@@ -120,6 +120,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             const msgDiv = document.createElement('div');
             msgDiv.id = 'noNftMsg';
             msgDiv.textContent = 'Nothing to Withdraw';
+            msgDiv.style.justifyContent="center";
             document.body.appendChild(msgDiv);
         }
     }

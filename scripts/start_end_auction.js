@@ -268,7 +268,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         const msgDiv = document.createElement('div');
         msgDiv.id = 'noNftMsg';
         msgDiv.textContent = 'No NFT Available to Start or End Auction';
-        msgDiv.style = "padding-left:35%;";
+        msgDiv.style.justifyContent="center";
         document.body.appendChild(msgDiv);
     }
 
