@@ -26,7 +26,7 @@ contract NFTAuction is ERC721URIStorage, Ownable {
     }
 
     address public contractOwner;
-    uint256 private _auctionDuration = 2 minutes;
+    uint256 private _auctionDuration = 30 minutes;
     mapping(uint256 => Auction) public auctions;
     mapping(uint256 => mapping(address => uint256)) private _totalBids;
     uint256[] public liveAuctions;

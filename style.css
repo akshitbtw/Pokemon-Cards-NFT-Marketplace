@@ -132,6 +132,7 @@ button {
 #connect-button {
   background-color: white;
   color: black;
+  margin-right: 10px;
 }
 
 button:hover {
