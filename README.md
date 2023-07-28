@@ -94,21 +94,24 @@ npm run dev
    - Enter your bid amount in the input field next to the Pokémon card NFT you want to bid on.
    - Click the "Place Bid" button to submit your bid.
 
-   ![Bidding on Auctions](screenshots/place_bid.png)
+   ![Bidding on Auctions](https://github.com/akshitbtw/nft_marketplace/assets/83155183/03b8fe81-29fa-4ee4-9392-e5664caa2a78)
+   ![Bidding on Auctions_Card_Details](https://github.com/akshitbtw/nft_marketplace/assets/83155183/ce5d565d-e246-4498-812d-a071a0163b3b)
 
 2. Winning an Auction:
    - If you place the highest bid on an auction and the timer expires, the NFT will be automatically transferred to your Ethereum wallet.
    - You can see the NFT you won in the "My NFTs" section.
 
-   ![Winning an Auction](screenshots/winning_auction.png)
-
-3. Withdrawing Bids:
+   ![Winning an Auction](https://github.com/akshitbtw/nft_marketplace/assets/83155183/717d5dcc-063b-4556-b0b7-1e5bcd6747d2)
+   
+4. Withdrawing Bids:
    - If you don't win an auction, you can withdraw the bidded amount.
    - Go to the "Withdraw" section and find the card and click the "Withdraw" button below it to get back your bid amount.
 
-   ![Withdrawing Bids](screenshots/withdraw_bid.png)
+   ![Withdrawing Bids](https://github.com/akshitbtw/nft_marketplace/assets/83155183/ba0685e6-395d-4444-a349-0b4f9935f243)
 
 ### All Listings Webpage:
 
 1. To view all the Pokémon card NFTs available on the website, visit the "All Listings" webpage.
 2. Each NFT card, along with its attributes, image, and the owner's wallet address, will be displayed on this page.
+
+   ![All_Listings](https://github.com/akshitbtw/nft_marketplace/assets/83155183/5a3c0ddb-9539-4e2e-b981-56600937b1ae)
