@@ -95,9 +95,10 @@ npm run dev
    - Click the "Place Bid" button to submit your bid.
 
    ![Bidding on Auctions](https://github.com/akshitbtw/nft_marketplace/assets/83155183/03b8fe81-29fa-4ee4-9392-e5664caa2a78)
+   
    ![Bidding on Auctions_Card_Details](https://github.com/akshitbtw/nft_marketplace/assets/83155183/ce5d565d-e246-4498-812d-a071a0163b3b)
 
-2. Winning an Auction:
+3. Winning an Auction:
    - If you place the highest bid on an auction and the timer expires, the NFT will be automatically transferred to your Ethereum wallet.
    - You can see the NFT you won in the "My NFTs" section.
 
