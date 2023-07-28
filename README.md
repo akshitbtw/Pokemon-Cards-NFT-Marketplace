@@ -72,20 +72,20 @@ npm run dev
    - Fill in the required details in the form shown there, such as card attributes, image.
    - Click the "Create NFT" button to create a new Pokémon card NFT.
 
-   ![Minting NFTs](screenshots/mint_nft.png)
+   ![Minting NFTs](https://github.com/akshitbtw/nft_marketplace/assets/83155183/9145ce7a-f908-4452-a429-95a12b709629)
 
 2. Starting an Auction:
    - To start an auction for a specific Pokémon card NFT, go to the "Start/End Auction" section under the admin panel.
    - Find the card you want to auction and click the "Start Auction" button below it.
 
-   ![Starting an Auction](screenshots/start_auction.png)
+   ![Starting an Auction](https://github.com/akshitbtw/nft_marketplace/assets/83155183/aea14052-d809-4cf3-9665-a6f4f7f37c7d)
 
 3. Ending an Auction:
    - Admin can manually end an ongoing auction after its timer expires.
    - Go to the "Start/End Auction" section under the admin panel.
    - Find the card and click the "End Auction" button below it.
 
-   ![Ending an Auction](screenshots/end_auction.png)
+   ![Ending an Auction](https://github.com/akshitbtw/nft_marketplace/assets/83155183/8a4bdb33-178a-4254-8547-09ce2d95b682)
 
 ### Users:
 
