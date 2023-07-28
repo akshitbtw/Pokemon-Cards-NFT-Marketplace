@@ -78,7 +78,7 @@ npm run dev
    - To start an auction for a specific Pokémon card NFT, go to the "Start/End Auction" section under the admin panel.
    - Find the card you want to auction and click the "Start Auction" button below it.
 
-   ![Starting an Auction](https://github.com/akshitbtw/nft_marketplace/assets/83155183/aea14052-d809-4cf3-9665-a6f4f7f37c7d)
+   ![Starting an Auction](https://github.com/akshitbtw/nft_marketplace/assets/83155183/8599a88b-a5f3-41cd-b6b9-aa224a2d4af4)
 
 3. Ending an Auction:
    - Admin can manually end an ongoing auction after its timer expires.
@@ -107,11 +107,11 @@ npm run dev
    - If you don't win an auction, you can withdraw the bidded amount.
    - Go to the "Withdraw" section and find the card and click the "Withdraw" button below it to get back your bid amount.
 
-   ![Withdrawing Bids](https://github.com/akshitbtw/nft_marketplace/assets/83155183/ba0685e6-395d-4444-a349-0b4f9935f243)
+   ![Withdrawing Bids](https://github.com/akshitbtw/nft_marketplace/assets/83155183/d5fd63ef-a3b4-45b9-b421-4084fb774386)
 
 ### All Listings Webpage:
 
 1. To view all the Pokémon card NFTs available on the website, visit the "All Listings" webpage.
 2. Each NFT card, along with its attributes, image, and the owner's wallet address, will be displayed on this page.
 
-   ![All_Listings](https://github.com/akshitbtw/nft_marketplace/assets/83155183/5a3c0ddb-9539-4e2e-b981-56600937b1ae)
+   ![All_Listings](https://github.com/akshitbtw/nft_marketplace/assets/83155183/c9936e17-a30c-4a65-afe8-36d9ce90d9e9)
