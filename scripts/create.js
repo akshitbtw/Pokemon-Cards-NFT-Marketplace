@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         const response = await fetch("https://api.nft.storage/upload", {
             method: "POST",
             headers: {
-                Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkaWQ6ZXRocjoweDk0MjQxMDI0RkQxYTA5NjMyRjFjOTFBQ0E4MkVGZDAzOEEwNThhODgiLCJpc3MiOiJuZnQtc3RvcmFnZSIsImlhdCI6MTY4OTA5MzI0MzI0OSwibmFtZSI6Im1vaGl0MTIzIn0.JtUXvkMnoPmofXXJyCGUS6TwazGibOl785DFaepibPE`
+                Authorization: `Bearer Token NFT STORAGE`
             },
             body: formData
         });
